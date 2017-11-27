@@ -47,12 +47,10 @@ var generateRandomNumber = function (startNumber, endNumber) {
   return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
 };
 
-var renderPhoto = function (photosArray, template) {
-  var photoElement = template.cloneNode(true);
-  photoElement.querySelector('img').src = photosArray.url;
-  photoElement.querySelector('.picture-comments').textContent = photosArray.comments;
-  photoElement.querySelector('.picture-likes').textContent = photosArray.likes;
-  return photoElement;
+var render = function (template, pictureData, mapper) {
+  template.querySelector(mapper.url[0]).src = pictureData.url;
+  template.querySelector(mapper.comments[0]).textContent = pictureData.comments;
+  template.querySelector(mapper.likes[0]).textContent = pictureData.likes;
 };
 
 var removeClass = function (objectName, className) {
@@ -62,19 +60,35 @@ var removeClass = function (objectName, className) {
 var pictures = [];
 var picturesList = document.querySelector('.pictures');
 var photoTemplate = document.querySelector('#picture-template').content;
+var galleryOverlayTemplate = document.querySelector('.gallery-overlay');
 var photoGallery = document.querySelector('.gallery-overlay');
 var photoFragment = document.createDocumentFragment();
+
 removeClass(photoGallery, 'hidden');
 
 for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
 }
 
-for (i = 0; i < pictures.length; i++) {
-  photoFragment.appendChild(renderPhoto(pictures[i], photoTemplate));
-}
+pictures.forEach(function (picture) {
+  var photoElement = photoTemplate.cloneNode(true);
+  render(photoElement, picture, {
+    url: ['img', 'src'],
+    comments: ['.picture-comments', 'textContent'],
+    likes: ['.picture-likes', 'textContent']
+  });
+  photoFragment.appendChild(photoElement);
+});
 
 picturesList.appendChild(photoFragment);
-document.querySelector('.gallery-overlay-image').src = pictures[0].url;
-document.querySelector('.likes-count').textContent = pictures[0].likes;
-document.querySelector('.comments-count').textContent = pictures[0].comments.length;
+
+render(galleryOverlayTemplate, {
+  url: pictures[0].url,
+  comments: pictures[0].comments.length,
+  likes: pictures[0].likes
+},
+{
+  url: ['.gallery-overlay-image', 'src'],
+  comments: ['.comments-count', 'textContent'],
+  likes: ['.likes-count', 'textContent']
+});
