@@ -11,35 +11,36 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+var generateCommentNumber = function (lastNumberOfComment) {
+  var numberOfComment;
+  do {
+    numberOfComment = generateRandomNumber(0, (COMMENTS.length - 1));
+  } while (numberOfComment === lastNumberOfComment);
+  lastNumberOfComment = numberOfComment;
+  return numberOfComment;
+};
 
-var generateDataArray = function () {
-  var dataArray = [];
+var generatePicture = function (photoIndex) {
   var numbersOfLikes;
   var numbersOfCommentRows;
   var numberOfComment;
-  var lastNumberOfComment;
+  var lastNumberOfComment = 0;
+  var someComments = [];
+  numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
+  numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
 
-  for (var i = 1; i <= 25; i++) {
-    var someComment = [];
-    numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
-    numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
-
-    while (numbersOfCommentRows >= 1) {
-      do {
-        numberOfComment = generateRandomNumber(0, (COMMENTS.length - 1));
-      } while (numberOfComment === lastNumberOfComment);
-      someComment.push(COMMENTS[numberOfComment]);
-      lastNumberOfComment = numberOfComment;
-      numbersOfCommentRows--;
-    }
-
-    dataArray.push({
-      url: 'photos/' + i + '.jpg',
-      likes: numbersOfLikes,
-      comments: someComment
-    });
+  generateCommentNumber();
+  while (numbersOfCommentRows >= 1) {
+    numberOfComment = generateCommentNumber(lastNumberOfComment);
+    someComments.push(COMMENTS[numberOfComment]);
+    lastNumberOfComment = numberOfComment;
+    numbersOfCommentRows--;
   }
-  return dataArray;
+  return {
+    url: 'photos/' + photoIndex + '.jpg',
+    likes: numbersOfLikes,
+    comments: someComments
+  };
 };
 
 var generateRandomNumber = function (startNumber, endNumber) {
@@ -58,19 +59,22 @@ var removeClass = function (objectName, className) {
   objectName.classList.remove(className);
 };
 
-var photosData = generateDataArray();
+var pictures = [];
 var picturesList = document.querySelector('.pictures');
 var photoTemplate = document.querySelector('#picture-template').content;
 var photoGallery = document.querySelector('.gallery-overlay');
 var photoFragment = document.createDocumentFragment();
-
 removeClass(photoGallery, 'hidden');
 
-for (var i = 0; i < photosData.length; i++) {
-  photoFragment.appendChild(renderPhoto(photosData[i], photoTemplate));
+for (var i = 1; i <= 25; i++) {
+  pictures.push(generatePicture(i));
+}
+
+for (i = 0; i < pictures.length; i++) {
+  photoFragment.appendChild(renderPhoto(pictures[i], photoTemplate));
 }
 
 picturesList.appendChild(photoFragment);
-document.querySelector('.gallery-overlay-image').src = photosData[0].url;
-document.querySelector('.likes-count').textContent = photosData[0].likes;
-document.querySelector('.comments-count').textContent = photosData[0].comments.length;
+document.querySelector('.gallery-overlay-image').src = pictures[0].url;
+document.querySelector('.likes-count').textContent = pictures[0].likes;
+document.querySelector('.comments-count').textContent = pictures[0].comments.length;
