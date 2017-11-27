@@ -40,19 +40,10 @@ var generateRandomNumber = function (startNumber, endNumber) {
 
 var renderPhoto = function (photosArray, template) {
   var photoElement = template.cloneNode(true);
-  returnTag('img', photoElement).src = photosArray.url;
-  returnTag('.picture-comments', photoElement).textContent = photosArray.comments;
-  returnTag('.picture-likes', photoElement).textContent = photosArray.likes;
+  photoElement.querySelector('img').src = photosArray.url;
+  photoElement.querySelector('.picture-comments').textContent = photosArray.comments;
+  photoElement.querySelector('.picture-likes').textContent = photosArray.likes;
   return photoElement;
-};
-
-var returnTag = function (selector, objectName) {
-  return !objectName ? document.querySelector(selector) : objectName.querySelector(selector);
-
-};
-
-var createFragment = function () {
-  return document.createDocumentFragment();
 };
 
 var removeClass = function (objectName, className) {
@@ -69,10 +60,10 @@ var comments = [
 ];
 
 var photosData = generateDataArray(comments);
-var picturesList = returnTag('.pictures');
-var photoTemplate = returnTag('#picture-template').content;
-var photoGallery = returnTag('.gallery-overlay');
-var photoFragment = createFragment();
+var picturesList = document.querySelector('.pictures');
+var photoTemplate = document.querySelector('#picture-template').content;
+var photoGallery = document.querySelector('.gallery-overlay');
+var photoFragment = document.createDocumentFragment();
 
 removeClass(photoGallery, 'hidden');
 
@@ -81,6 +72,6 @@ for (var i = 0; i < photosData.length; i++) {
 }
 
 picturesList.appendChild(photoFragment);
-returnTag('.gallery-overlay-image').src = photosData[0].url;
-returnTag('.likes-count').textContent = photosData[0].likes;
-returnTag('.comments-count').textContent = photosData[0].comments.length;
+document.querySelector('.gallery-overlay-image').src = photosData[0].url;
+document.querySelector('.likes-count').textContent = photosData[0].likes;
+document.querySelector('.comments-count').textContent = photosData[0].comments.length;
