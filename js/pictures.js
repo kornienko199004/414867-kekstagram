@@ -3,8 +3,16 @@ var MIN_QUANTITY_OF_LIKES = 15;
 var MAX_QUANTITY_OF_LIKES = 200;
 var MIN_QUANTITY_OF_COMMENT_ROWS = 1;
 var MAX_QUANTITY_OF_COMMENT_ROWS = 2;
+var COMMENTS = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
 
-var generateDataArray = function (comments) {
+var generateDataArray = function () {
   var dataArray = [];
   var numbersOfLikes;
   var numbersOfCommentRows;
@@ -18,9 +26,9 @@ var generateDataArray = function (comments) {
 
     while (numbersOfCommentRows >= 1) {
       do {
-        numberOfComment = generateRandomNumber(0, (comments.length - 1));
+        numberOfComment = generateRandomNumber(0, (COMMENTS.length - 1));
       } while (numberOfComment === lastNumberOfComment);
-      someComment.push(comments[numberOfComment]);
+      someComment.push(COMMENTS[numberOfComment]);
       lastNumberOfComment = numberOfComment;
       numbersOfCommentRows--;
     }
@@ -50,16 +58,7 @@ var removeClass = function (objectName, className) {
   objectName.classList.remove(className);
 };
 
-var comments = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
-
-var photosData = generateDataArray(comments);
+var photosData = generateDataArray();
 var picturesList = document.querySelector('.pictures');
 var photoTemplate = document.querySelector('#picture-template').content;
 var photoGallery = document.querySelector('.gallery-overlay');
