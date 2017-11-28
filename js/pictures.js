@@ -13,7 +13,7 @@ var COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-var generateCommentIndex = (function () {
+var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
   var generateCommentNumber = function () {
     var numberOfComment;
@@ -35,7 +35,7 @@ var generatePicture = function (photoIndex) {
   var comments = [];
 
   while (numbersOfCommentRows >= 1) {
-    comments.push(COMMENTS[generateCommentIndex()]);
+    comments.push(COMMENTS[generateRandomCommentIndex()]);
     numbersOfCommentRows--;
   }
 
@@ -50,7 +50,7 @@ var generateRandomNumber = function (startNumber, endNumber) {
   return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
 };
 
-var insertDataIntoNode = function (node, data, mapper) { // @TODO
+var insertDataIntoNode = function (node, data, mapper) {
   Object.keys(data).forEach(function (key) {
     if (mapper[key]) {
       var selector = mapper[key][0];
@@ -66,7 +66,7 @@ var insertDataIntoNode = function (node, data, mapper) { // @TODO
 };
 
 var render = function (template, data, mapper) {
-  var node = photoTemplate.cloneNode(true);
+  var node = template.cloneNode(true);
 
   insertDataIntoNode(node, data, mapper);
 
@@ -90,26 +90,25 @@ var removeClass = function (objectName, className) {
 };
 
 var pictures = [];
-var picturesList = document.querySelector('.pictures');
-var photoTemplate = document.querySelector('#picture-template').content;
-var galleryOverlayTemplate = document.querySelector('.gallery-overlay');
-var photoGallery = document.querySelector('.gallery-overlay');
-
-removeClass(photoGallery, 'hidden');
+var picturesContainer = document.querySelector('.pictures');
+var pictureTemplate = document.querySelector('#picture-template').content;
+var galleryOverlay = document.querySelector('.gallery-overlay');
 
 for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
 }
 
-picturesList.appendChild(
-    renderList(photoTemplate, pictures, {
-      url: ['img', 'src'],
-      comments: ['.picture-comments', 'textContent'],
-      likes: ['.picture-likes', 'textContent']
-    })
-);
+var pictureList = renderList(pictureTemplate, pictures, {
+  url: ['img', 'src'],
+  comments: ['.picture-comments', 'textContent'],
+  likes: ['.picture-likes', 'textContent']
+});
 
-insertDataIntoNode(galleryOverlayTemplate, {
+picturesContainer.appendChild(pictureList);
+
+removeClass(galleryOverlay, 'hidden');
+
+insertDataIntoNode(galleryOverlay, {
   url: pictures[0].url,
   comments: pictures[0].comments.length,
   likes: pictures[0].likes
