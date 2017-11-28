@@ -48,10 +48,20 @@ var generateRandomNumber = function (startNumber, endNumber) {
 };
 
 var render = function (template, pictureData, mapper) {
-  template.querySelector(mapper.url[0])[mapper.url[1]] = pictureData.url;
-  template.querySelector(mapper.comments[0])[mapper.comments[1]] = pictureData.comments;
-  template.querySelector(mapper.likes[0])[mapper.likes[1]] = pictureData.likes;
+  Object.keys(pictureData).forEach(function (key) {
+    if (mapper[key]) {
+      var selector = mapper[key][0];
+      var attribute = mapper[key][1];
+      var value = pictureData[key];
+      var node = template.querySelector(selector);
+
+      if (node) {
+        node[attribute] = value;
+      }
+    }
+  });
 };
+
 
 var removeClass = function (objectName, className) {
   objectName.classList.remove(className);
