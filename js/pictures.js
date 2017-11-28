@@ -48,9 +48,9 @@ var generateRandomNumber = function (startNumber, endNumber) {
 };
 
 var render = function (template, pictureData, mapper) {
-  template.querySelector(mapper.url[0]).src = pictureData.url;
-  template.querySelector(mapper.comments[0]).textContent = pictureData.comments;
-  template.querySelector(mapper.likes[0]).textContent = pictureData.likes;
+  template.querySelector(mapper.url[0])[mapper.url[1]] = pictureData.url;
+  template.querySelector(mapper.comments[0])[mapper.comments[1]] = pictureData.comments;
+  template.querySelector(mapper.likes[0])[mapper.likes[1]] = pictureData.likes;
 };
 
 var removeClass = function (objectName, className) {
