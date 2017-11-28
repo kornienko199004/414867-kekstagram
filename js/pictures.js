@@ -25,21 +25,21 @@ var generatePicture = function (photoIndex) {
   var numbersOfLikes;
   var numbersOfCommentRows;
   var numberOfComment;
-  var someComments = [];
+  var comments = [];
   numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
   numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
 
 
   while (numbersOfCommentRows >= 1) {
     numberOfComment = generateCommentNumber(lastNumberOfComment);
-    someComments.push(COMMENTS[numberOfComment]);
+    comments.push(COMMENTS[numberOfComment]);
     lastNumberOfComment = numberOfComment;
     numbersOfCommentRows--;
   }
   return {
     url: 'photos/' + photoIndex + '.jpg',
     likes: numbersOfLikes,
-    comments: someComments
+    comments: comments
   };
 };
 
