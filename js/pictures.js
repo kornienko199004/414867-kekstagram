@@ -29,7 +29,7 @@ var generatePicture = function (photoIndex) {
   numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
   numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
 
-  generateCommentNumber();
+
   while (numbersOfCommentRows >= 1) {
     numberOfComment = generateCommentNumber(lastNumberOfComment);
     someComments.push(COMMENTS[numberOfComment]);
