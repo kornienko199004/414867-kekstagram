@@ -12,28 +12,31 @@ var COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-var lastNumberOfComment = 0;
-var generateCommentNumber = function (lastNumber) {
-  var numberOfComment;
-  do {
-    numberOfComment = generateRandomNumber(0, (COMMENTS.length - 1));
-  } while (numberOfComment === lastNumber);
-  return numberOfComment;
-};
+var generateRandomCommentIndex = (function () {
+  var lastNumberOfComment = 0;
+  var generateCommentNumber = function () {
+    var numberOfComment;
+    do {
+      numberOfComment = generateRandomNumber(0, (COMMENTS.length - 1));
+    } while (numberOfComment === lastNumberOfComment);
+
+    lastNumberOfComment = numberOfComment;
+
+    return numberOfComment;
+  };
+
+  return generateCommentNumber;
+}());
 
 var generatePicture = function (photoIndex) {
   var numbersOfLikes;
   var numbersOfCommentRows;
-  var numberOfComment;
   var comments = [];
   numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
   numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
 
-
   while (numbersOfCommentRows >= 1) {
-    numberOfComment = generateCommentNumber(lastNumberOfComment);
-    comments.push(COMMENTS[numberOfComment]);
-    lastNumberOfComment = numberOfComment;
+    comments.push(COMMENTS[generateRandomCommentIndex()]);
     numbersOfCommentRows--;
   }
   return {
