@@ -11,12 +11,13 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-var generateCommentNumber = function (lastNumberOfComment) {
+
+var lastNumberOfComment = 0;
+var generateCommentNumber = function (lastNumber) {
   var numberOfComment;
   do {
     numberOfComment = generateRandomNumber(0, (COMMENTS.length - 1));
-  } while (numberOfComment === lastNumberOfComment);
-  lastNumberOfComment = numberOfComment;
+  } while (numberOfComment === lastNumber);
   return numberOfComment;
 };
 
@@ -24,7 +25,6 @@ var generatePicture = function (photoIndex) {
   var numbersOfLikes;
   var numbersOfCommentRows;
   var numberOfComment;
-  var lastNumberOfComment = 0;
   var someComments = [];
   numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
   numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
