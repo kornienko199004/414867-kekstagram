@@ -106,15 +106,89 @@ var pictureList = renderList(pictureTemplate, pictures, {
 
 picturesContainer.appendChild(pictureList);
 
-removeClass(galleryOverlay, 'hidden');
+var ESC_CODE = 27;
+var ENTER_CODE = 13;
 
-insertDataIntoNode(galleryOverlay, {
-  url: pictures[0].url,
-  comments: pictures[0].comments.length,
-  likes: pictures[0].likes
-},
-{
-  url: ['.gallery-overlay-image', 'src'],
-  comments: ['.comments-count', 'textContent'],
-  likes: ['.likes-count', 'textContent']
-});
+var clickElement;
+var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
+var needElement = document.querySelector('.picture');
+var lastPictureFocused;
+
+galleryOverlayClose.tabIndex = 0;
+
+var onPhotoClick = function (evt) {
+  clickElement = evt.target;
+  evt.preventDefault();
+
+  while (clickElement !== picturesContainer) {
+    clickElement = clickElement.parentNode;
+    if (needElement.className === clickElement.className) {
+      var url = clickElement.querySelector('img').src;
+      var comments = clickElement.querySelector('.picture-comments').textContent;
+      var likes = clickElement.querySelector('.picture-likes').textContent;
+
+      removeClass(galleryOverlay, 'hidden');
+      insertDataIntoNode(galleryOverlay, {
+        url: url,
+        comments: comments.length,
+        likes: likes
+      },
+      {
+        url: ['.gallery-overlay-image', 'src'],
+        comments: ['.comments-count', 'textContent'],
+        likes: ['.likes-count', 'textContent']
+      });
+    }
+  }
+};
+
+var onPhotoKeydown = function (evt) {
+  if (evt.keyCode === ENTER_CODE) {
+    removeClass(galleryOverlay, 'hidden');
+    galleryOverlayClose.focus();
+    var url = evt.target.querySelector('img').src;
+    var comments = evt.target.querySelector('.picture-comments').textContent;
+    var likes = evt.target.querySelector('.picture-likes').textContent;
+    lastPictureFocused = evt.target;
+    insertDataIntoNode(galleryOverlay, {
+      url: url,
+      comments: comments.length,
+      likes: likes
+    },
+    {
+      url: ['.gallery-overlay-image', 'src'],
+      comments: ['.comments-count', 'textContent'],
+      likes: ['.likes-count', 'textContent']
+    });
+  }
+};
+
+var onCloseButtonClick = function (evt) {
+  evt.preventDefault();
+  galleryOverlay.classList.add('hidden');
+};
+
+var onCloseButtonKeydown = function (evt) {
+  if (evt.keyCode === ENTER_CODE) {
+    evt.preventDefault();
+    galleryOverlay.classList.add('hidden');
+    lastPictureFocused.focus();
+  }
+};
+
+var onDocumentKeydown = function (evt) {
+  if (!galleryOverlay.classList.contains('hidden')) {
+    if (evt.keyCode === ESC_CODE) {
+      galleryOverlay.classList.add('hidden');
+    }
+  }
+};
+
+picturesContainer.addEventListener('click', onPhotoClick);
+picturesContainer.addEventListener('keydown', onPhotoKeydown);
+
+galleryOverlayClose.addEventListener('click', onCloseButtonClick);
+
+galleryOverlayClose.addEventListener('keydown', onCloseButtonKeydown);
+
+document.addEventListener('keydown', onDocumentKeydown);
