@@ -149,26 +149,35 @@ var onPhotoClick = function (evt) {
     clickElement = clickElement.parentNode;
     if (needElement.className === clickElement.className) {
 
-      var currentPhotoData = returnDomElementData(clickElement, {
-        url: ['img', 'src'],
-        comments: ['.picture-comments', 'textContent.length'],
-        likes: ['.picture-likes', 'textContent']
-      });
-      showCurrentPhotoOverlay(galleryOverlay, className, currentPhotoData, currentPhotoMapping);
+      showCurrentPhotoOverlay(
+          galleryOverlay,
+          className,
+          returnDomElementData(clickElement, {
+            url: ['img', 'src'],
+            comments: ['.picture-comments', 'textContent.length'],
+            likes: ['.picture-likes', 'textContent']
+          }),
+          currentPhotoMapping
+      );
     }
   }
 };
 
 var onPhotoKeydown = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
-    var currentPhotoData = returnDomElementData(evt.target, {
-      url: ['img', 'src'],
-      comments: ['.picture-comments', 'textContent.length'],
-      likes: ['.picture-likes', 'textContent']
-    });
     lastPictureFocused = evt.target;
 
-    showCurrentPhotoOverlay(galleryOverlay, className, currentPhotoData, currentPhotoMapping);
+    showCurrentPhotoOverlay(
+        galleryOverlay,
+        className,
+        returnDomElementData(evt.target, {
+          url: ['img', 'src'],
+          comments: ['.picture-comments', 'textContent.length'],
+          likes: ['.picture-likes', 'textContent']
+        }),
+        currentPhotoMapping
+    );
+
     galleryOverlayClose.focus();
   }
 };
@@ -187,10 +196,8 @@ var onCloseButtonKeydown = function (evt) {
 };
 
 var onDocumentKeydown = function (evt) {
-  if (!galleryOverlay.classList.contains('hidden')) {
-    if (evt.keyCode === CODE_ESC) {
-      galleryOverlay.classList.add('hidden');
-    }
+  if (!galleryOverlay.classList.contains('hidden') && (evt.keyCode === CODE_ESC)) {
+    galleryOverlay.classList.add('hidden');
   }
 };
 
