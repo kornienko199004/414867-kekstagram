@@ -95,6 +95,7 @@ var pictures = [];
 var picturesContainer = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture-template').content;
 var galleryOverlay = document.querySelector('.gallery-overlay');
+var className = 'hidden';
 
 for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
@@ -108,10 +109,35 @@ var pictureList = renderList(pictureTemplate, pictures, {
 
 picturesContainer.appendChild(pictureList);
 
+
+var showCurrentPhotoOverlay = function (nodeElement, nameOfClass, data, mapping) {
+  removeClass(nodeElement, nameOfClass);
+  insertDataIntoNode(nodeElement, data, mapping);
+};
+
+var returnDomElementData = function (node, mapper) {
+  var dataElements = { };
+  Object.keys(mapper).forEach(function (key) {
+    var selector = mapper[key][0];
+    var attribute = mapper[key][1];
+    var value = node.querySelector(selector)[attribute];
+
+    if (value) {
+      dataElements[key] = value;
+    }
+  });
+  return dataElements;
+};
+
 var clickElement;
 var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 var needElement = document.querySelector('.picture');
 var lastPictureFocused;
+var currentPhotoMapping = {
+  url: ['.gallery-overlay-image', 'src'],
+  comments: ['.comments-count', 'textContent'],
+  likes: ['.likes-count', 'textContent']
+};
 
 galleryOverlayClose.tabIndex = 0;
 
@@ -122,43 +148,28 @@ var onPhotoClick = function (evt) {
   while (clickElement !== picturesContainer) {
     clickElement = clickElement.parentNode;
     if (needElement.className === clickElement.className) {
-      var url = clickElement.querySelector('img').src;
-      var comments = clickElement.querySelector('.picture-comments').textContent;
-      var likes = clickElement.querySelector('.picture-likes').textContent;
 
-      removeClass(galleryOverlay, 'hidden');
-      insertDataIntoNode(galleryOverlay, {
-        url: url,
-        comments: comments.length,
-        likes: likes
-      },
-      {
-        url: ['.gallery-overlay-image', 'src'],
-        comments: ['.comments-count', 'textContent'],
-        likes: ['.likes-count', 'textContent']
+      var currentPhotoData = returnDomElementData(clickElement, {
+        url: ['img', 'src'],
+        comments: ['.picture-comments', 'textContent.length'],
+        likes: ['.picture-likes', 'textContent']
       });
+      showCurrentPhotoOverlay(galleryOverlay, className, currentPhotoData, currentPhotoMapping);
     }
   }
 };
 
 var onPhotoKeydown = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
-    removeClass(galleryOverlay, 'hidden');
-    galleryOverlayClose.focus();
-    var url = evt.target.querySelector('img').src;
-    var comments = evt.target.querySelector('.picture-comments').textContent;
-    var likes = evt.target.querySelector('.picture-likes').textContent;
-    lastPictureFocused = evt.target;
-    insertDataIntoNode(galleryOverlay, {
-      url: url,
-      comments: comments.length,
-      likes: likes
-    },
-    {
-      url: ['.gallery-overlay-image', 'src'],
-      comments: ['.comments-count', 'textContent'],
-      likes: ['.likes-count', 'textContent']
+    var currentPhotoData = returnDomElementData(evt.target, {
+      url: ['img', 'src'],
+      comments: ['.picture-comments', 'textContent.length'],
+      likes: ['.picture-likes', 'textContent']
     });
+    lastPictureFocused = evt.target;
+
+    showCurrentPhotoOverlay(galleryOverlay, className, currentPhotoData, currentPhotoMapping);
+    galleryOverlayClose.focus();
   }
 };
 
