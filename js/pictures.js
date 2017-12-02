@@ -191,7 +191,9 @@ var onCloseButtonKeydown = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
     evt.preventDefault();
     galleryOverlayElement.classList.add('hidden');
-    lastPictureFocused.focus();
+    if (lastPictureFocused) {
+      lastPictureFocused.focus();
+    }
   }
 };
 
