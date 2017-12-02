@@ -14,6 +14,7 @@ var COMMENTS = [
 ];
 var CODE_ESC = 27;
 var CODE_ENTER = 13;
+var OVERLAY_HIDDEN_CLASS = 'hidden';
 
 var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
@@ -95,7 +96,6 @@ var pictures = [];
 var picturesContainerElement = document.querySelector('.pictures');
 var pictureTemplateElement = document.querySelector('#picture-template').content;
 var galleryOverlayElement = document.querySelector('.gallery-overlay');
-var className = 'hidden';
 
 for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
@@ -111,7 +111,7 @@ picturesContainerElement.appendChild(pictureList);
 
 
 var showCurrentPhotoOverlay = function (data, mapping) {
-  removeClass(galleryOverlayElement, className);
+  removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
   insertDataIntoNode(galleryOverlayElement, data, mapping);
 };
 
@@ -183,13 +183,13 @@ var onPhotoKeydown = function (evt) {
 
 var onCloseButtonClick = function (evt) {
   evt.preventDefault();
-  galleryOverlayElement.classList.add('hidden');
+  galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
 };
 
 var onCloseButtonKeydown = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
     evt.preventDefault();
-    galleryOverlayElement.classList.add('hidden');
+    galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
     if (lastPictureFocused) {
       lastPictureFocused.focus();
     }
@@ -197,8 +197,8 @@ var onCloseButtonKeydown = function (evt) {
 };
 
 var onDocumentKeydown = function (evt) {
-  if (!galleryOverlayElement.classList.contains('hidden') && (evt.keyCode === CODE_ESC)) {
-    galleryOverlayElement.classList.add('hidden');
+  if (!galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS) && (evt.keyCode === CODE_ESC)) {
+    galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
   }
 };
 
