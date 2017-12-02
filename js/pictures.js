@@ -110,9 +110,9 @@ var pictureList = renderList(pictureTemplateElement, pictures, {
 picturesContainerElement.appendChild(pictureList);
 
 
-var showCurrentPhotoOverlay = function (nodeElement, nameOfClass, data, mapping) {
-  removeClass(nodeElement, nameOfClass);
-  insertDataIntoNode(nodeElement, data, mapping);
+var showCurrentPhotoOverlay = function (data, mapping) {
+  removeClass(galleryOverlayElement, className);
+  insertDataIntoNode(galleryOverlayElement, data, mapping);
 };
 
 var returnDomElementData = function (node, mapper) {
@@ -150,8 +150,6 @@ var onPhotoClick = function (evt) {
     if (pictureElement.className === clickElement.className) {
 
       showCurrentPhotoOverlay(
-          galleryOverlayElement,
-          className,
           returnDomElementData(clickElement, {
             url: ['img', 'src'],
             comments: ['.picture-comments', 'textContent.length'],
@@ -168,8 +166,6 @@ var onPhotoKeydown = function (evt) {
     lastPictureFocused = evt.target;
 
     showCurrentPhotoOverlay(
-        galleryOverlayElement,
-        className,
         returnDomElementData(evt.target, {
           url: ['img', 'src'],
           comments: ['.picture-comments', 'textContent.length'],
