@@ -12,6 +12,8 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+var CODE_ESC = 27;
+var CODE_ENTER = 13;
 
 var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
@@ -106,9 +108,6 @@ var pictureList = renderList(pictureTemplate, pictures, {
 
 picturesContainer.appendChild(pictureList);
 
-var ESC_CODE = 27;
-var ENTER_CODE = 13;
-
 var clickElement;
 var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 var needElement = document.querySelector('.picture');
@@ -143,7 +142,7 @@ var onPhotoClick = function (evt) {
 };
 
 var onPhotoKeydown = function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
+  if (evt.keyCode === CODE_ENTER) {
     removeClass(galleryOverlay, 'hidden');
     galleryOverlayClose.focus();
     var url = evt.target.querySelector('img').src;
@@ -169,7 +168,7 @@ var onCloseButtonClick = function (evt) {
 };
 
 var onCloseButtonKeydown = function (evt) {
-  if (evt.keyCode === ENTER_CODE) {
+  if (evt.keyCode === CODE_ENTER) {
     evt.preventDefault();
     galleryOverlay.classList.add('hidden');
     lastPictureFocused.focus();
@@ -178,7 +177,7 @@ var onCloseButtonKeydown = function (evt) {
 
 var onDocumentKeydown = function (evt) {
   if (!galleryOverlay.classList.contains('hidden')) {
-    if (evt.keyCode === ESC_CODE) {
+    if (evt.keyCode === CODE_ESC) {
       galleryOverlay.classList.add('hidden');
     }
   }
