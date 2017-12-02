@@ -96,6 +96,10 @@ var pictures = [];
 var picturesContainerElement = document.querySelector('.pictures');
 var pictureTemplateElement = document.querySelector('#picture-template').content;
 var galleryOverlayElement = document.querySelector('.gallery-overlay');
+var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
+var pictureElement = document.querySelector('.picture');
+var clickElement;
+var lastPictureFocused;
 
 for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
@@ -128,11 +132,6 @@ var returnDomElementData = function (node, mapper) {
   });
   return dataElements;
 };
-
-var clickElement;
-var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
-var pictureElement = document.querySelector('.picture');
-var lastPictureFocused;
 
 galleryOverlayElementCloseElement.tabIndex = 0;
 
