@@ -92,7 +92,7 @@ var removeClass = function (objectName, className) {
 };
 
 var pictures = [];
-var picturesContainer = document.querySelector('.pictures');
+var picturesContainerElement = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture-template').content;
 var galleryOverlay = document.querySelector('.gallery-overlay');
 var className = 'hidden';
@@ -107,7 +107,7 @@ var pictureList = renderList(pictureTemplate, pictures, {
   likes: ['.picture-likes', 'textContent']
 });
 
-picturesContainer.appendChild(pictureList);
+picturesContainerElement.appendChild(pictureList);
 
 
 var showCurrentPhotoOverlay = function (nodeElement, nameOfClass, data, mapping) {
@@ -145,7 +145,7 @@ var onPhotoClick = function (evt) {
   clickElement = evt.target;
   evt.preventDefault();
 
-  while (clickElement !== picturesContainer) {
+  while (clickElement !== picturesContainerElement) {
     clickElement = clickElement.parentNode;
     if (needElement.className === clickElement.className) {
 
@@ -201,8 +201,8 @@ var onDocumentKeydown = function (evt) {
   }
 };
 
-picturesContainer.addEventListener('click', onPhotoClick);
-picturesContainer.addEventListener('keydown', onPhotoKeydown);
+picturesContainerElement.addEventListener('click', onPhotoClick);
+picturesContainerElement.addEventListener('keydown', onPhotoKeydown);
 
 galleryOverlayCloseElement.addEventListener('click', onCloseButtonClick);
 
