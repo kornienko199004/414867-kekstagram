@@ -130,7 +130,7 @@ var returnDomElementData = function (node, mapper) {
 };
 
 var clickElement;
-var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
+var galleryOverlayCloseElement = document.querySelector('.gallery-overlay-close');
 var needElement = document.querySelector('.picture');
 var lastPictureFocused;
 var currentPhotoMapping = {
@@ -139,7 +139,7 @@ var currentPhotoMapping = {
   likes: ['.likes-count', 'textContent']
 };
 
-galleryOverlayClose.tabIndex = 0;
+galleryOverlayCloseElement.tabIndex = 0;
 
 var onPhotoClick = function (evt) {
   clickElement = evt.target;
@@ -178,7 +178,7 @@ var onPhotoKeydown = function (evt) {
         currentPhotoMapping
     );
 
-    galleryOverlayClose.focus();
+    galleryOverlayCloseElement.focus();
   }
 };
 
@@ -204,8 +204,8 @@ var onDocumentKeydown = function (evt) {
 picturesContainer.addEventListener('click', onPhotoClick);
 picturesContainer.addEventListener('keydown', onPhotoKeydown);
 
-galleryOverlayClose.addEventListener('click', onCloseButtonClick);
+galleryOverlayCloseElement.addEventListener('click', onCloseButtonClick);
 
-galleryOverlayClose.addEventListener('keydown', onCloseButtonKeydown);
+galleryOverlayCloseElement.addEventListener('keydown', onCloseButtonKeydown);
 
 document.addEventListener('keydown', onDocumentKeydown);
