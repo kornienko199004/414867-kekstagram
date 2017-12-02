@@ -131,7 +131,7 @@ var returnDomElementData = function (node, mapper) {
 
 var clickElement;
 var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
-var needElement = document.querySelector('.picture');
+var pictureElement = document.querySelector('.picture');
 var lastPictureFocused;
 var currentPhotoMapping = {
   url: ['.gallery-overlay-image', 'src'],
@@ -147,7 +147,7 @@ var onPhotoClick = function (evt) {
 
   while (clickElement !== picturesContainerElement) {
     clickElement = clickElement.parentNode;
-    if (needElement.className === clickElement.className) {
+    if (pictureElement.className === clickElement.className) {
 
       showCurrentPhotoOverlay(
           galleryOverlayElement,
