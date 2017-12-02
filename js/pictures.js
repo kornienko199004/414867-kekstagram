@@ -93,7 +93,7 @@ var removeClass = function (objectName, className) {
 
 var pictures = [];
 var picturesContainerElement = document.querySelector('.pictures');
-var pictureTemplate = document.querySelector('#picture-template').content;
+var pictureTemplateElement = document.querySelector('#picture-template').content;
 var galleryOverlay = document.querySelector('.gallery-overlay');
 var className = 'hidden';
 
@@ -101,7 +101,7 @@ for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
 }
 
-var pictureList = renderList(pictureTemplate, pictures, {
+var pictureList = renderList(pictureTemplateElement, pictures, {
   url: ['img', 'src'],
   comments: ['.picture-comments', 'textContent'],
   likes: ['.picture-likes', 'textContent']
