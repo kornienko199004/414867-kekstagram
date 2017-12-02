@@ -133,11 +133,6 @@ var clickElement;
 var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
 var pictureElement = document.querySelector('.picture');
 var lastPictureFocused;
-var currentPhotoMapping = {
-  url: ['.gallery-overlay-image', 'src'],
-  comments: ['.comments-count', 'textContent'],
-  likes: ['.likes-count', 'textContent']
-};
 
 galleryOverlayElementCloseElement.tabIndex = 0;
 
@@ -155,7 +150,11 @@ var onPhotoClick = function (evt) {
             comments: ['.picture-comments', 'textContent.length'],
             likes: ['.picture-likes', 'textContent']
           }),
-          currentPhotoMapping
+          {
+            url: ['.gallery-overlay-image', 'src'],
+            comments: ['.comments-count', 'textContent'],
+            likes: ['.likes-count', 'textContent']
+          }
       );
     }
   }
@@ -171,7 +170,11 @@ var onPhotoKeydown = function (evt) {
           comments: ['.picture-comments', 'textContent.length'],
           likes: ['.picture-likes', 'textContent']
         }),
-        currentPhotoMapping
+        {
+          url: ['.gallery-overlay-image', 'src'],
+          comments: ['.comments-count', 'textContent'],
+          likes: ['.likes-count', 'textContent']
+        }
     );
 
     galleryOverlayElementCloseElement.focus();
