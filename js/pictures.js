@@ -97,7 +97,6 @@ var picturesContainerElement = document.querySelector('.pictures');
 var pictureTemplateElement = document.querySelector('#picture-template').content;
 var galleryOverlayElement = document.querySelector('.gallery-overlay');
 var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
-var clickElement;
 var lastPictureFocused;
 
 for (var i = 1; i <= 25; i++) {
@@ -147,7 +146,7 @@ var pictureElement = document.querySelector('.picture');
 galleryOverlayElementCloseElement.tabIndex = 0;
 
 var onPhotoClick = function (evt) {
-  clickElement = evt.target;
+  var clickElement = evt.target;
   evt.preventDefault();
 
   while (clickElement !== picturesContainerElement) {
