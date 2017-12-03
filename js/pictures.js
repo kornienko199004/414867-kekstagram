@@ -112,8 +112,10 @@ var pictureList = renderList(pictureTemplateElement, pictures, {
 picturesContainerElement.appendChild(pictureList);
 
 var getAttribute = function (element, selector, attribute) {
-
-  return element ? element.querySelector(selector)[attribute] : '';
+  if (element) {
+    var value = element.querySelector(selector)[attribute];
+  }
+  return value;
 };
 
 var hasClass = function (element, className) {
