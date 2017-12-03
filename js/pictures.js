@@ -181,9 +181,6 @@ var onDocumentKeydown = function (evt) {
 
 picturesContainerElement.addEventListener('click', onPhotoClick);
 picturesContainerElement.addEventListener('keydown', onPhotoKeydown);
-
 galleryOverlayElementCloseElement.addEventListener('click', onCloseButtonClick);
-
 galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydown);
-
 document.addEventListener('keydown', onDocumentKeydown);
