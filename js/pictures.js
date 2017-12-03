@@ -12,6 +12,9 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+var CODE_ESC = 27;
+var CODE_ENTER = 13;
+var OVERLAY_HIDDEN_CLASS = 'hidden';
 
 var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
@@ -89,32 +92,102 @@ var removeClass = function (objectName, className) {
   objectName.classList.remove(className);
 };
 
+var getAttribute = function (element, selector, attribute) {
+  if (element) {
+    var value = element.querySelector(selector)[attribute];
+  }
+  return value;
+};
+
+var hasClass = function (element, className) {
+  return element.classList.contains(className);
+};
+
+var addClass = function (element, className) {
+  element.classList.add(className);
+};
+
+var showCurrentPhotoOverlay = function (element) {
+  if (hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS)) {
+    removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
+  }
+  insertDataIntoNode(galleryOverlayElement,
+      {
+        url: getAttribute(element, 'img', 'src'),
+        comments: getAttribute(element, '.picture-comments', 'textContent'),
+        likes: getAttribute(element, '.picture-likes', 'textContent')
+      },
+      {
+        url: ['.gallery-overlay-image', 'src'],
+        comments: ['.comments-count', 'textContent.length'],
+        likes: ['.likes-count', 'textContent']
+      }
+  );
+};
+
+var onPhotoClick = function (e) {
+  var clickElement = e.target;
+  var pictureElement = document.querySelector('.picture');
+  e.preventDefault();
+  while (clickElement !== picturesContainerElement) {
+    clickElement = clickElement.parentNode;
+    if (pictureElement.className === clickElement.className) {
+      showCurrentPhotoOverlay(clickElement);
+    }
+  }
+};
+
+var onPhotoKeydown = function (e) {
+  if (e.keyCode === CODE_ENTER) {
+    lastPictureFocused = e.target;
+    showCurrentPhotoOverlay(e.target);
+    galleryOverlayElementCloseElement.focus();
+  }
+};
+
+var onCloseButtonClick = function (e) {
+  e.preventDefault();
+  addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
+};
+
+var onCloseButtonKeydown = function (e) {
+  if (e.keyCode === CODE_ENTER) {
+    e.preventDefault();
+    addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
+    if (lastPictureFocused) {
+      lastPictureFocused.focus();
+    }
+  }
+};
+
+var onDocumentKeydown = function (e) {
+  if (!hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS) && (e.keyCode === CODE_ESC)) {
+    addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
+  }
+};
+
+
 var pictures = [];
-var picturesContainer = document.querySelector('.pictures');
-var pictureTemplate = document.querySelector('#picture-template').content;
-var galleryOverlay = document.querySelector('.gallery-overlay');
+var picturesContainerElement = document.querySelector('.pictures');
+var pictureTemplateElement = document.querySelector('#picture-template').content;
+var galleryOverlayElement = document.querySelector('.gallery-overlay');
+var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
+var lastPictureFocused;
+galleryOverlayElementCloseElement.tabIndex = 0;
 
 for (var i = 1; i <= 25; i++) {
   pictures.push(generatePicture(i));
 }
 
-var pictureList = renderList(pictureTemplate, pictures, {
+var pictureList = renderList(pictureTemplateElement, pictures, {
   url: ['img', 'src'],
   comments: ['.picture-comments', 'textContent'],
   likes: ['.picture-likes', 'textContent']
 });
 
-picturesContainer.appendChild(pictureList);
-
-removeClass(galleryOverlay, 'hidden');
-
-insertDataIntoNode(galleryOverlay, {
-  url: pictures[0].url,
-  comments: pictures[0].comments.length,
-  likes: pictures[0].likes
-},
-{
-  url: ['.gallery-overlay-image', 'src'],
-  comments: ['.comments-count', 'textContent'],
-  likes: ['.likes-count', 'textContent']
-});
+picturesContainerElement.appendChild(pictureList);
+picturesContainerElement.addEventListener('click', onPhotoClick);
+picturesContainerElement.addEventListener('keydown', onPhotoKeydown);
+galleryOverlayElementCloseElement.addEventListener('click', onCloseButtonClick);
+galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydown);
+document.addEventListener('keydown', onDocumentKeydown);
