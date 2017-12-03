@@ -92,25 +92,6 @@ var removeClass = function (objectName, className) {
   objectName.classList.remove(className);
 };
 
-var pictures = [];
-var picturesContainerElement = document.querySelector('.pictures');
-var pictureTemplateElement = document.querySelector('#picture-template').content;
-var galleryOverlayElement = document.querySelector('.gallery-overlay');
-var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
-var lastPictureFocused;
-
-for (var i = 1; i <= 25; i++) {
-  pictures.push(generatePicture(i));
-}
-
-var pictureList = renderList(pictureTemplateElement, pictures, {
-  url: ['img', 'src'],
-  comments: ['.picture-comments', 'textContent'],
-  likes: ['.picture-likes', 'textContent']
-});
-
-picturesContainerElement.appendChild(pictureList);
-
 var getAttribute = function (element, selector, attribute) {
   if (element) {
     var value = element.querySelector(selector)[attribute];
@@ -143,22 +124,6 @@ var showCurrentPhotoOverlay = function (currentElement) {
       }
   );
 };
-
-var pictureElement = document.querySelector('.picture');
-galleryOverlayElementCloseElement.tabIndex = 0;
-
-var onPhotoClick = function (e) {
-  var clickElement = e.target;
-  e.preventDefault();
-
-  while (clickElement !== picturesContainerElement) {
-    clickElement = clickElement.parentNode;
-    if (pictureElement.className === clickElement.className) {
-      showCurrentPhotoOverlay(clickElement);
-    }
-  }
-};
-
 var onPhotoKeydown = function (e) {
   if (e.keyCode === CODE_ENTER) {
     lastPictureFocused = e.target;
@@ -185,6 +150,39 @@ var onCloseButtonKeydown = function (e) {
 var onDocumentKeydown = function (e) {
   if (!hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS) && (e.keyCode === CODE_ESC)) {
     addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
+  }
+};
+
+
+var pictures = [];
+var picturesContainerElement = document.querySelector('.pictures');
+var pictureTemplateElement = document.querySelector('#picture-template').content;
+var galleryOverlayElement = document.querySelector('.gallery-overlay');
+var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
+var lastPictureFocused;
+galleryOverlayElementCloseElement.tabIndex = 0;
+
+for (var i = 1; i <= 25; i++) {
+  pictures.push(generatePicture(i));
+}
+
+var pictureList = renderList(pictureTemplateElement, pictures, {
+  url: ['img', 'src'],
+  comments: ['.picture-comments', 'textContent'],
+  likes: ['.picture-likes', 'textContent']
+});
+
+picturesContainerElement.appendChild(pictureList);
+
+var onPhotoClick = function (e) {
+  var clickElement = e.target;
+  var pictureElement = document.querySelector('.picture');
+  e.preventDefault();
+  while (clickElement !== picturesContainerElement) {
+    clickElement = clickElement.parentNode;
+    if (pictureElement.className === clickElement.className) {
+      showCurrentPhotoOverlay(clickElement);
+    }
   }
 };
 
