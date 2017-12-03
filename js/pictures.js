@@ -117,8 +117,12 @@ var getAttribute = function (element, selector, attribute) {
   return element ? element.querySelector(selector)[attribute] : '';
 };
 
+var hasClass = function (element, className) {
+  return element.classList.contains(className);
+};
+
 var showCurrentPhotoOverlay = function (currentElement) {
-  if (galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+  if (hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS)) {
     removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
   }
   insertDataIntoNode(galleryOverlayElement,
@@ -174,7 +178,7 @@ var onCloseButtonKeydown = function (evt) {
 };
 
 var onDocumentKeydown = function (evt) {
-  if (!galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS) && (evt.keyCode === CODE_ESC)) {
+  if (!hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS) && (evt.keyCode === CODE_ESC)) {
     galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
   }
 };
