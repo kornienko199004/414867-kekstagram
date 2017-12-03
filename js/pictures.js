@@ -112,34 +112,26 @@ var pictureList = renderList(pictureTemplateElement, pictures, {
 
 picturesContainerElement.appendChild(pictureList);
 
-
-var showCurrentPhotoOverlay = function (currentElement) {
-  var data = returnDomElementData(currentElement, {
-    url: ['img', 'src'],
-    comments: ['.picture-comments', 'textContent.length'],
-    likes: ['.picture-likes', 'textContent']
-  });
-  var mapping = {
-    url: ['.gallery-overlay-image', 'src'],
-    comments: ['.comments-count', 'textContent'],
-    likes: ['.likes-count', 'textContent']
-  };
-  removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
-  insertDataIntoNode(galleryOverlayElement, data, mapping);
+var getAttribute = function (element, selector, attribute) {
+  return element.querySelector(selector)[attribute];
 };
 
-var returnDomElementData = function (node, mapper) {
-  var dataElements = { };
-  Object.keys(mapper).forEach(function (key) {
-    var selector = mapper[key][0];
-    var attribute = mapper[key][1];
-    var value = node.querySelector(selector)[attribute];
-
-    if (value) {
-      dataElements[key] = value;
-    }
-  });
-  return dataElements;
+var showCurrentPhotoOverlay = function (currentElement) {
+  if (galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+    removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
+  }
+  insertDataIntoNode(galleryOverlayElement,
+      {
+        url: getAttribute(currentElement, 'img', 'src'),
+        comments: getAttribute(currentElement, '.picture-comments', 'textContent'),
+        likes: getAttribute(currentElement, '.picture-likes', 'textContent')
+      },
+      {
+        url: ['.gallery-overlay-image', 'src'],
+        comments: ['.comments-count', 'textContent.length'],
+        likes: ['.likes-count', 'textContent']
+      }
+  );
 };
 
 var pictureElement = document.querySelector('.picture');
