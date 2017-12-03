@@ -113,7 +113,8 @@ var pictureList = renderList(pictureTemplateElement, pictures, {
 picturesContainerElement.appendChild(pictureList);
 
 var getAttribute = function (element, selector, attribute) {
-  return element.querySelector(selector)[attribute];
+
+  return element ? element.querySelector(selector)[attribute] : '';
 };
 
 var showCurrentPhotoOverlay = function (currentElement) {
