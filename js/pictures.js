@@ -124,6 +124,19 @@ var showCurrentPhotoOverlay = function (currentElement) {
       }
   );
 };
+
+var onPhotoClick = function (e) {
+  var clickElement = e.target;
+  var pictureElement = document.querySelector('.picture');
+  e.preventDefault();
+  while (clickElement !== picturesContainerElement) {
+    clickElement = clickElement.parentNode;
+    if (pictureElement.className === clickElement.className) {
+      showCurrentPhotoOverlay(clickElement);
+    }
+  }
+};
+
 var onPhotoKeydown = function (e) {
   if (e.keyCode === CODE_ENTER) {
     lastPictureFocused = e.target;
@@ -173,19 +186,6 @@ var pictureList = renderList(pictureTemplateElement, pictures, {
 });
 
 picturesContainerElement.appendChild(pictureList);
-
-var onPhotoClick = function (e) {
-  var clickElement = e.target;
-  var pictureElement = document.querySelector('.picture');
-  e.preventDefault();
-  while (clickElement !== picturesContainerElement) {
-    clickElement = clickElement.parentNode;
-    if (pictureElement.className === clickElement.className) {
-      showCurrentPhotoOverlay(clickElement);
-    }
-  }
-};
-
 picturesContainerElement.addEventListener('click', onPhotoClick);
 picturesContainerElement.addEventListener('keydown', onPhotoKeydown);
 galleryOverlayElementCloseElement.addEventListener('click', onCloseButtonClick);
