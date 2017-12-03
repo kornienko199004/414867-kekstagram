@@ -107,15 +107,15 @@ var addClass = function (element, className) {
   element.classList.add(className);
 };
 
-var showCurrentPhotoOverlay = function (currentElement) {
+var showCurrentPhotoOverlay = function (element) {
   if (hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS)) {
     removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
   }
   insertDataIntoNode(galleryOverlayElement,
       {
-        url: getAttribute(currentElement, 'img', 'src'),
-        comments: getAttribute(currentElement, '.picture-comments', 'textContent'),
-        likes: getAttribute(currentElement, '.picture-likes', 'textContent')
+        url: getAttribute(element, 'img', 'src'),
+        comments: getAttribute(element, '.picture-comments', 'textContent'),
+        likes: getAttribute(element, '.picture-likes', 'textContent')
       },
       {
         url: ['.gallery-overlay-image', 'src'],
