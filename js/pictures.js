@@ -121,6 +121,10 @@ var hasClass = function (element, className) {
   return element.classList.contains(className);
 };
 
+var addClass = function (element, className) {
+  element.classList.add(className);
+};
+
 var showCurrentPhotoOverlay = function (currentElement) {
   if (hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS)) {
     removeClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
@@ -164,13 +168,13 @@ var onPhotoKeydown = function (evt) {
 
 var onCloseButtonClick = function (evt) {
   evt.preventDefault();
-  galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
+  addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
 };
 
 var onCloseButtonKeydown = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
     evt.preventDefault();
-    galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
+    addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
     if (lastPictureFocused) {
       lastPictureFocused.focus();
     }
@@ -179,7 +183,7 @@ var onCloseButtonKeydown = function (evt) {
 
 var onDocumentKeydown = function (evt) {
   if (!hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS) && (evt.keyCode === CODE_ESC)) {
-    galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
+    addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
   }
 };
 
