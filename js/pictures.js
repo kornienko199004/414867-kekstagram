@@ -145,9 +145,9 @@ var showCurrentPhotoOverlay = function (currentElement) {
 var pictureElement = document.querySelector('.picture');
 galleryOverlayElementCloseElement.tabIndex = 0;
 
-var onPhotoClick = function (evt) {
-  var clickElement = evt.target;
-  evt.preventDefault();
+var onPhotoClick = function (e) {
+  var clickElement = e.target;
+  e.preventDefault();
 
   while (clickElement !== picturesContainerElement) {
     clickElement = clickElement.parentNode;
@@ -157,22 +157,22 @@ var onPhotoClick = function (evt) {
   }
 };
 
-var onPhotoKeydown = function (evt) {
-  if (evt.keyCode === CODE_ENTER) {
-    lastPictureFocused = evt.target;
-    showCurrentPhotoOverlay(evt.target);
+var onPhotoKeydown = function (e) {
+  if (e.keyCode === CODE_ENTER) {
+    lastPictureFocused = e.target;
+    showCurrentPhotoOverlay(e.target);
     galleryOverlayElementCloseElement.focus();
   }
 };
 
-var onCloseButtonClick = function (evt) {
-  evt.preventDefault();
+var onCloseButtonClick = function (e) {
+  e.preventDefault();
   addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
 };
 
-var onCloseButtonKeydown = function (evt) {
-  if (evt.keyCode === CODE_ENTER) {
-    evt.preventDefault();
+var onCloseButtonKeydown = function (e) {
+  if (e.keyCode === CODE_ENTER) {
+    e.preventDefault();
     addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
     if (lastPictureFocused) {
       lastPictureFocused.focus();
@@ -180,8 +180,8 @@ var onCloseButtonKeydown = function (evt) {
   }
 };
 
-var onDocumentKeydown = function (evt) {
-  if (!hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS) && (evt.keyCode === CODE_ESC)) {
+var onDocumentKeydown = function (e) {
+  if (!hasClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS) && (e.keyCode === CODE_ESC)) {
     addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
   }
 };
