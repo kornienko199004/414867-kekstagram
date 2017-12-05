@@ -166,6 +166,16 @@ var onDocumentKeydown = function (e) {
   }
 };
 
+var resetValues = function () {
+  scale = defaultScale;
+  effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
+  uploadResizeControlsValue.value = scale + '%';
+  effectImagePreview.className = defaultEffectClassName;
+  effect.checked = defaultEffect;
+  uploadFormHashtags.value = '';
+  uploadFormDescription.value = '';
+};
+
 
 var pictures = [];
 var picturesContainerElement = document.querySelector('.pictures');
@@ -191,3 +201,136 @@ picturesContainerElement.addEventListener('keydown', onPhotoKeydown);
 galleryOverlayElementCloseElement.addEventListener('click', onCloseButtonClick);
 galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydown);
 document.addEventListener('keydown', onDocumentKeydown);
+
+var form = document.querySelector('.upload-form');
+var uploadFile = form.querySelector('#upload-file');
+var uploadOverlay = form.querySelector('.upload-overlay');
+var uploadFormCansel = form.querySelector('.upload-form-cancel');
+var uploadFormDescription = form.querySelector('.upload-form-description');
+var uploadResizeControlsValue = form.querySelector('.upload-resize-controls-value');
+var uploadEffectControl = form.querySelector('.upload-effect-controls');
+var effectImagePreview = form.querySelector('.effect-image-preview');
+var uploadFormHashtags = form.querySelector('.upload-form-hashtags');
+var uploadResizeControlsButtonDec = form.querySelector('.upload-resize-controls-button-dec');
+var uploadResizeControlsButtonInc = form.querySelector('.upload-resize-controls-button-inc');
+var scaleStep = 25;
+var minScale = 25;
+var maxScale = 100;
+var scale;
+var effect = form.querySelector('[name=effect]');
+var defaultEffect = effect.checked;
+var defaultScale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1);
+var defaultEffectClassName = effectImagePreview.className;
+var hashtagInvalid;
+
+uploadResizeControlsValue.step = 25;
+uploadFile.addEventListener('change', function () {
+  if (hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS)) {
+    removeClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
+    resetValues();
+  }
+});
+uploadFormCansel.addEventListener('click', function () {
+  if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS)) {
+    addClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
+    uploadFile.value = '';
+  }
+});
+document.addEventListener('keydown', function (e) {
+  if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC) {
+    addClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
+    uploadFile.value = '';
+  }
+});
+
+uploadFormDescription.maxLength = 140;
+var lastEffectName;
+uploadEffectControl.addEventListener('change', function (e) {
+  var str = 'upload-';
+  var effectName = e.target.id.slice(str.length);
+  if (lastEffectName && hasClass(effectImagePreview, uploadOverlay)) {
+    removeClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
+  }
+  effectImagePreview.classList.add(effectName);
+  lastEffectName = effectName;
+});
+
+uploadResizeControlsButtonDec.addEventListener('click', function () {
+  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) - scaleStep;
+  if (scale < minScale) {
+    scale = minScale;
+  }
+  effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
+  uploadResizeControlsValue.value = scale + '%';
+});
+
+uploadResizeControlsButtonInc.addEventListener('click', function () {
+  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) + scaleStep;
+  if (scale > maxScale) {
+    scale = maxScale;
+  }
+  effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
+  uploadResizeControlsValue.value = scale + '%';
+});
+
+var returnSpacePosition = function (startPosition, str) {
+  var position = str.indexOf(' ', startPosition);
+  if ((!str[position + 1]) && (position > 0)) {
+    position = -1;
+  }
+  return position;
+};
+
+uploadFormHashtags.addEventListener('change', function () {
+  var hashtag;
+  var hashtags = [];
+  var startPosition = 0;
+  var endPosition;
+  while (startPosition >= 0) {
+    hashtagInvalid = false;
+    if (uploadFormHashtags.value[startPosition] !== '#') {
+      hashtagInvalid = true;
+      break;
+    }
+    endPosition = returnSpacePosition(startPosition, uploadFormHashtags.value);
+    if (endPosition > 0) {
+      hashtag = uploadFormHashtags.value.slice(startPosition, endPosition);
+      startPosition = endPosition + 1;
+    } else if (endPosition === -1) {
+      hashtag = uploadFormHashtags.value.slice(startPosition);
+      if (~hashtag.indexOf(' ')) {
+        hashtag = hashtag.slice(0, hashtag.indexOf(' '));
+      }
+      startPosition = -1;
+    }
+    if (hashtag.length > 20) {
+      hashtagInvalid = true;
+      break;
+    }
+    if (hashtag.indexOf('#', 1) > 0) {
+      hashtagInvalid = true;
+      break;
+    }
+    hashtag = hashtag.toLowerCase();
+    if (~hashtags.indexOf(hashtag)) {
+      hashtagInvalid = true;
+      break;
+    }
+    if (hashtags.length === 5) {
+      hashtagInvalid = true;
+      break;
+    }
+    hashtags.push(hashtag);
+  }
+});
+
+form.addEventListener('submit', function (e) {
+  form.action = 'https://js.dump.academy/kekstagram';
+  if (hashtagInvalid) {
+    uploadFormHashtags.style.borderColor = 'red';
+    e.preventDefault();
+  } else {
+    resetValues();
+    uploadFormHashtags.style.borderColor = 'initial';
+  }
+});
