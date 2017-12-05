@@ -15,6 +15,9 @@ var COMMENTS = [
 var CODE_ESC = 27;
 var CODE_ENTER = 13;
 var OVERLAY_HIDDEN_CLASS = 'hidden';
+var SCALE_STEP = 25;
+var MIN_SCALE = 25;
+var MAX_SCALE = 100;
 
 var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
@@ -213,9 +216,6 @@ var effectImagePreview = form.querySelector('.effect-image-preview');
 var uploadFormHashtags = form.querySelector('.upload-form-hashtags');
 var uploadResizeControlsButtonDec = form.querySelector('.upload-resize-controls-button-dec');
 var uploadResizeControlsButtonInc = form.querySelector('.upload-resize-controls-button-inc');
-var scaleStep = 25;
-var minScale = 25;
-var maxScale = 100;
 var scale;
 var effect = form.querySelector('[name=effect]');
 var defaultEffect = effect.checked;
@@ -256,18 +256,18 @@ uploadEffectControl.addEventListener('change', function (e) {
 });
 
 uploadResizeControlsButtonDec.addEventListener('click', function () {
-  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) - scaleStep;
-  if (scale < minScale) {
-    scale = minScale;
+  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) - SCALE_STEP;
+  if (scale < MIN_SCALE) {
+    scale = MIN_SCALE;
   }
   effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
   uploadResizeControlsValue.value = scale + '%';
 });
 
 uploadResizeControlsButtonInc.addEventListener('click', function () {
-  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) + scaleStep;
-  if (scale > maxScale) {
-    scale = maxScale;
+  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) + SCALE_STEP;
+  if (scale > MAX_SCALE) {
+    scale = MAX_SCALE;
   }
   effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
   uploadResizeControlsValue.value = scale + '%';
