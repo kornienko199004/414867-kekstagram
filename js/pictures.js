@@ -223,7 +223,9 @@ var defaultScale = +uploadResizeControlsValue.value.slice(0, uploadResizeControl
 var defaultEffectClassName = effectImagePreview.className;
 var hashtagInvalid;
 
+form.action = 'https://js.dump.academy/kekstagram';
 uploadResizeControlsValue.step = 25;
+
 uploadFile.addEventListener('change', function () {
   if (hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS)) {
     removeClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
@@ -325,7 +327,6 @@ uploadFormHashtags.addEventListener('change', function () {
 });
 
 form.addEventListener('submit', function (e) {
-  form.action = 'https://js.dump.academy/kekstagram';
   if (hashtagInvalid) {
     uploadFormHashtags.style.borderColor = 'red';
     e.preventDefault();
