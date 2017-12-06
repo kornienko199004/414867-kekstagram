@@ -18,6 +18,8 @@ var OVERLAY_HIDDEN_CLASS = 'hidden';
 var SCALE_STEP = 25;
 var MIN_SCALE = 25;
 var MAX_SCALE = 100;
+var MAX_COMMENT_LENGTH = 140;
+var MAX_HASHTAG_LENGTH = 20;
 
 var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
@@ -226,65 +228,71 @@ var onResizeControlsButtonInkClick = function () {
   uploadResizeControlsValue.value = scale + '%';
 };
 
-
-var returnSpacePosition = function (startPosition, str) {
-  var position = str.indexOf(' ', startPosition);
-  if ((!str[position + 1]) && (position > 0)) {
-    position = -1;
-  }
-  return position;
+var highlightElement = function (element, color) {
+  element.style.borderColor = color;
 };
 
-var onInputHashtagChange = function () {
-  var hashtag;
-  var hashtags = [];
-  var startPosition = 0;
-  var endPosition;
-  while (startPosition >= 0) {
-    hashtagInvalid = false;
-    if (uploadFormHashtags.value[startPosition] !== '#') {
-      hashtagInvalid = true;
-      break;
+var resetHighlightElement = function (element) {
+  element.style.borderColor = 'initial';
+};
+
+var validateTag = function (tag) {
+  return tag.length < MAX_HASHTAG_LENGTH && tag[0] === '#';
+};
+
+var watchForSimillarTags = function (tagsString) {
+  var position;
+  var duplicate = false;
+  var dublicatePosition;
+  tagsString.forEach(function (tag) {
+    position = tagsString.indexOf(tag);
+    dublicatePosition = tagsString.indexOf(tag, position + 1);
+    if (~dublicatePosition) {
+      duplicate = true;
     }
-    endPosition = returnSpacePosition(startPosition, uploadFormHashtags.value);
-    if (endPosition > 0) {
-      hashtag = uploadFormHashtags.value.slice(startPosition, endPosition);
-      startPosition = endPosition + 1;
-    } else if (endPosition === -1) {
-      hashtag = uploadFormHashtags.value.slice(startPosition);
-      if (~hashtag.indexOf(' ')) {
-        hashtag = hashtag.slice(0, hashtag.indexOf(' '));
-      }
-      startPosition = -1;
-    }
-    if (hashtag.length > 20) {
-      hashtagInvalid = true;
-      break;
-    }
-    if (hashtag.indexOf('#', 1) > 0) {
-      hashtagInvalid = true;
-      break;
-    }
-    hashtag = hashtag.toLowerCase();
-    if (~hashtags.indexOf(hashtag)) {
-      hashtagInvalid = true;
-      break;
-    }
-    if (hashtags.length === 5) {
-      hashtagInvalid = true;
-      break;
-    }
-    hashtags.push(hashtag);
+  });
+  return duplicate;
+};
+
+var validateTagsString = function (tagsString) {
+  var possibleTags = tagsString.split(' ');
+
+  var invalidTags = possibleTags
+      .map(validateTag)
+      .filter(function (validationResult) {
+        return !validationResult;
+      });
+
+  return invalidTags.length === 0 && possibleTags.length < 6 && !watchForSimillarTags(possibleTags);
+};
+
+var validateTagsElement = function () {
+  return validateTagsString(uploadFormHashtags.value);
+};
+
+var validateCommentElement = function () {
+  return uploadFormDescription.value.length <= MAX_COMMENT_LENGTH;
+};
+
+var onChangeTagsElement = function () {
+  if (validateTagsElement()) {
+    resetHighlightElement(uploadFormHashtags);
+  } else {
+    highlightElement(uploadFormHashtags, 'red');
+  }
+};
+
+var onChangeCommentElement = function () {
+  if (validateCommentElement()) {
+    resetHighlightElement(uploadFormDescription);
+  } else {
+    highlightElement(uploadFormDescription, 'red');
   }
 };
 
 var onFormSubmit = function (e) {
-  if (hashtagInvalid) {
-    uploadFormHashtags.style.borderColor = 'red';
+  if (!validateCommentElement() || !validateTagsElement()) {
     e.preventDefault();
-  } else {
-    resetValues();
-    uploadFormHashtags.style.borderColor = 'initial';
   }
 };
 
@@ -311,7 +319,6 @@ var effect = form.querySelector('[name=effect]');
 var defaultEffect = effect.checked;
 var defaultScale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1);
 var defaultEffectClassName = effectImagePreview.className;
-var hashtagInvalid;
 var lastEffectName;
 
 galleryOverlayElementCloseElement.tabIndex = 0;
@@ -334,13 +341,14 @@ galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydo
 document.addEventListener('keydown', onDocumentKeydown);
 
 form.action = 'https://js.dump.academy/kekstagram';
-uploadResizeControlsValue.step = 25;
+uploadResizeControlsValue.step = SCALE_STEP;
 
 uploadFile.addEventListener('change', onInputFileChange);
 uploadFormCansel.addEventListener('click', onCancelButtonClick);
-uploadFormDescription.maxLength = 140;
+uploadFormDescription.maxLength = MAX_COMMENT_LENGTH;
 uploadEffectControl.addEventListener('change', onRadioControlEffectChange);
 uploadResizeControlsButtonDec.addEventListener('click', onResizeControlsButtonDecClick);
 uploadResizeControlsButtonInc.addEventListener('click', onResizeControlsButtonInkClick);
-uploadFormHashtags.addEventListener('change', onInputHashtagChange);
+uploadFormDescription.addEventListener('change', onChangeCommentElement);
+uploadFormHashtags.addEventListener('change', onChangeTagsElement);
 form.addEventListener('submit', onFormSubmit);
