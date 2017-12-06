@@ -208,30 +208,22 @@ var onRadioControlEffectChange = function (e) {
   lastEffectName = effectName;
 };
 
-var changeScale = function (increase) {
-  var scale;
-  if (increase > 0) {
-    scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) + SCALE_STEP;
-    if (scale > MAX_SCALE) {
-      scale = MAX_SCALE;
-    }
-  } else {
-    scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) - SCALE_STEP;
-    if (scale < MIN_SCALE) {
-      scale = MIN_SCALE;
-    }
+var onResizeControlsButtonDecClick = function () {
+  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) - SCALE_STEP;
+  if (scale < MIN_SCALE) {
+    scale = MIN_SCALE;
   }
   effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
   uploadResizeControlsValue.value = scale + '%';
 };
 
-var onResizeControlsButtonDecClick = function () {
-  changeScale();
-};
-
 var onResizeControlsButtonInkClick = function () {
-  var increase = 1;
-  changeScale(increase);
+  scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) + SCALE_STEP;
+  if (scale > MAX_SCALE) {
+    scale = MAX_SCALE;
+  }
+  effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
+  uploadResizeControlsValue.value = scale + '%';
 };
 
 
