@@ -170,7 +170,7 @@ var onDocumentKeydown = function (e) {
     addClass(galleryOverlayElement, OVERLAY_HIDDEN_CLASS);
   }
 
-  if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC) {
+  if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC && commentInputFocus !== 1) {
     addClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
     uploadFile.value = '';
   }
@@ -193,8 +193,16 @@ var onInputFileChange = function () {
   }
 };
 
+var onCommentInputFocus = function () {
+  commentInputFocus = 1;
+};
+
+var onCommentInputBlur = function () {
+  commentInputFocus = 0;
+};
+
 var onCancelButtonClick = function () {
-  if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS)) {
+  if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS) && commentInputFocus !== 1) {
     addClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
     uploadFile.value = '';
   }
@@ -320,7 +328,7 @@ var defaultEffect = effect.checked;
 var defaultScale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1);
 var defaultEffectClassName = effectImagePreview.className;
 var lastEffectName;
-
+var commentInputFocus;
 galleryOverlayElementCloseElement.tabIndex = 0;
 
 for (var i = 1; i <= 25; i++) {
@@ -346,6 +354,8 @@ uploadResizeControlsValue.step = SCALE_STEP;
 uploadFile.addEventListener('change', onInputFileChange);
 uploadFormCansel.addEventListener('click', onCancelButtonClick);
 uploadFormDescription.maxLength = MAX_COMMENT_LENGTH;
+uploadFormDescription.addEventListener('focus', onCommentInputFocus);
+uploadFormDescription.addEventListener('blur', onCommentInputBlur);
 uploadEffectControl.addEventListener('change', onRadioControlEffectChange);
 uploadResizeControlsButtonDec.addEventListener('click', onResizeControlsButtonDecClick);
 uploadResizeControlsButtonInc.addEventListener('click', onResizeControlsButtonInkClick);
