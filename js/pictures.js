@@ -248,18 +248,8 @@ var validateTag = function (tag) {
   return tag.length < MAX_HASHTAG_LENGTH && tag[0] === '#';
 };
 
-var watchForSimillarTags = function (tagsString) {
-  var position;
-  var duplicate = false;
-  var dublicatePosition;
-  tagsString.forEach(function (tag) {
-    position = tagsString.indexOf(tag);
-    dublicatePosition = tagsString.indexOf(tag, position + 1);
-    if (~dublicatePosition) {
-      duplicate = true;
-    }
-  });
-  return duplicate;
+var onlyUnique = function (value, index, self) {
+  return self.indexOf(value) === index;
 };
 
 var validateTagsString = function (tagsString) {
@@ -270,8 +260,7 @@ var validateTagsString = function (tagsString) {
       .filter(function (validationResult) {
         return !validationResult;
       });
-
-  return invalidTags.length === 0 && possibleTags.length < 6 && !watchForSimillarTags(possibleTags);
+  return invalidTags.length === 0 && possibleTags.length < 6 && !(possibleTags.length > possibleTags.filter(onlyUnique).length);
 };
 
 var validateTagsElement = function () {
