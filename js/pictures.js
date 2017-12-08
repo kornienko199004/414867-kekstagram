@@ -314,7 +314,7 @@ var lastPictureFocused;
 var form = document.querySelector('.upload-form');
 var uploadFile = form.querySelector('#upload-file');
 var uploadOverlay = form.querySelector('.upload-overlay');
-var uploadFormCansel = form.querySelector('.upload-form-cancel');
+var uploadFormCancel = form.querySelector('.upload-form-cancel');
 var uploadFormDescription = form.querySelector('.upload-form-description');
 var uploadResizeControlsValue = form.querySelector('.upload-resize-controls-value');
 var uploadEffectControl = form.querySelector('.upload-effect-controls');
@@ -352,7 +352,7 @@ form.action = 'https://js.dump.academy/kekstagram';
 uploadResizeControlsValue.step = SCALE_STEP;
 
 uploadFile.addEventListener('change', onInputFileChange);
-uploadFormCansel.addEventListener('click', onCancelButtonClick);
+uploadFormCancel.addEventListener('click', onCancelButtonClick);
 uploadFormDescription.maxLength = MAX_COMMENT_LENGTH;
 uploadFormDescription.addEventListener('focus', onCommentInputFocus);
 uploadFormDescription.addEventListener('blur', onCommentInputBlur);
