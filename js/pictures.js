@@ -20,6 +20,8 @@ var MIN_SCALE = 25;
 var MAX_SCALE = 100;
 var MAX_COMMENT_LENGTH = 140;
 var MAX_HASHTAG_LENGTH = 20;
+var EFFECT_CLASS_NAME_PREFIX = 'upload-';
+var MAX_QUANTITY_OF_HASHTAGS = 5;
 
 var generateRandomCommentIndex = (function () {
   var lastNumberOfComment = 0;
@@ -209,7 +211,7 @@ var onCancelButtonClick = function () {
 };
 
 var onRadioControlEffectChange = function (e) {
-  var str = 'upload-';
+  var str = EFFECT_CLASS_NAME_PREFIX;
   var effectName = e.target.id.slice(str.length);
   if (lastEffectName && hasClass(effectImagePreview, lastEffectName)) {
     removeClass(effectImagePreview, lastEffectName);
@@ -260,7 +262,7 @@ var validateTagsString = function (tagsString) {
       .filter(function (validationResult) {
         return !validationResult;
       });
-  return invalidTags.length === 0 && possibleTags.length < 6 && !(possibleTags.length > possibleTags.filter(onlyUnique).length);
+  return invalidTags.length === 0 && possibleTags.length <= MAX_QUANTITY_OF_HASHTAGS && !(possibleTags.length > possibleTags.filter(onlyUnique).length);
 };
 
 var validateTagsElement = function () {
