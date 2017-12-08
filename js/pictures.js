@@ -290,12 +290,14 @@ var onChangeCommentElement = function () {
 };
 
 var onFormSubmit = function (e) {
-  if (!validateCommentElement() || !validateTagsElement()) {
+  var isCommentElementValid = validateCommentElement();
+  var isTagsElementValid = validateTagsElement();
+  if (!isCommentElementValid || !isTagsElementValid) {
     e.preventDefault();
-    if (!validateTagsElement()) {
+    if (!isTagsElementValid) {
       highlightElement(uploadFormHashtags, 'red');
     }
-    if (!validateCommentElement()) {
+    if (!isCommentElementValid) {
       highlightElement(uploadFormDescription, 'red');
     }
   }
