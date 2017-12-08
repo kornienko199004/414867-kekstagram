@@ -174,7 +174,7 @@ var onDocumentKeydown = function (e) {
 
   if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
     addClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
-    uploadFile.value = '';
+    uploadFileElement.value = '';
   }
 };
 
@@ -184,8 +184,8 @@ var resetValues = function () {
   uploadResizeControlsValue.value = scale + '%';
   effectImagePreview.className = defaultEffectClassName;
   effect.checked = defaultEffect;
-  uploadFormHashtags.value = '';
-  uploadFormDescription.value = '';
+  uploadFormHashtagsElement.value = '';
+  uploadFormDescriptionElement.value = '';
 };
 
 var onInputFileChange = function () {
@@ -206,7 +206,7 @@ var onCommentInputBlur = function () {
 var onCancelButtonClick = function () {
   if (!hasClass(uploadOverlay, OVERLAY_HIDDEN_CLASS) && isCommentInputOnFocus !== 1) {
     addClass(uploadOverlay, OVERLAY_HIDDEN_CLASS);
-    uploadFile.value = '';
+    uploadFileElement.value = '';
   }
 };
 
@@ -266,26 +266,26 @@ var validateTagsString = function (tagsString) {
 };
 
 var validateTagsElement = function () {
-  return validateTagsString(uploadFormHashtags.value);
+  return validateTagsString(uploadFormHashtagsElement.value);
 };
 
 var validateCommentElement = function () {
-  return uploadFormDescription.value.length <= MAX_COMMENT_LENGTH;
+  return uploadFormDescriptionElement.value.length <= MAX_COMMENT_LENGTH;
 };
 
 var onChangeTagsElement = function () {
   if (validateTagsElement()) {
-    resetHighlightElement(uploadFormHashtags);
+    resetHighlightElement(uploadFormHashtagsElement);
   } else {
-    highlightElement(uploadFormHashtags, 'red');
+    highlightElement(uploadFormHashtagsElement, 'red');
   }
 };
 
 var onChangeCommentElement = function () {
   if (validateCommentElement()) {
-    resetHighlightElement(uploadFormDescription);
+    resetHighlightElement(uploadFormDescriptionElement);
   } else {
-    highlightElement(uploadFormDescription, 'red');
+    highlightElement(uploadFormDescriptionElement, 'red');
   }
 };
 
@@ -295,10 +295,10 @@ var onFormSubmit = function (e) {
   if (!isCommentElementValid || !isTagsElementValid) {
     e.preventDefault();
     if (!isTagsElementValid) {
-      highlightElement(uploadFormHashtags, 'red');
+      highlightElement(uploadFormHashtagsElement, 'red');
     }
     if (!isCommentElementValid) {
-      highlightElement(uploadFormDescription, 'red');
+      highlightElement(uploadFormDescriptionElement, 'red');
     }
   }
 };
@@ -311,14 +311,14 @@ var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay
 var lastPictureFocused;
 
 var form = document.querySelector('.upload-form');
-var uploadFile = form.querySelector('#upload-file');
+var uploadFileElement = form.querySelector('#upload-file');
 var uploadOverlay = form.querySelector('.upload-overlay');
-var uploadFormCancel = form.querySelector('.upload-form-cancel');
-var uploadFormDescription = form.querySelector('.upload-form-description');
+var uploadFormCancelElement = form.querySelector('.upload-form-cancel');
+var uploadFormDescriptionElement = form.querySelector('.upload-form-description');
 var uploadResizeControlsValue = form.querySelector('.upload-resize-controls-value');
-var uploadEffectControl = form.querySelector('.upload-effect-controls');
+var uploadEffectControlElement = form.querySelector('.upload-effect-controls');
 var effectImagePreview = form.querySelector('.effect-image-preview');
-var uploadFormHashtags = form.querySelector('.upload-form-hashtags');
+var uploadFormHashtagsElement = form.querySelector('.upload-form-hashtags');
 var uploadResizeControlsButtonDec = form.querySelector('.upload-resize-controls-button-dec');
 var uploadResizeControlsButtonInc = form.querySelector('.upload-resize-controls-button-inc');
 var scale;
@@ -350,14 +350,14 @@ document.addEventListener('keydown', onDocumentKeydown);
 form.action = 'https://js.dump.academy/kekstagram';
 uploadResizeControlsValue.step = SCALE_STEP;
 
-uploadFile.addEventListener('change', onInputFileChange);
-uploadFormCancel.addEventListener('click', onCancelButtonClick);
-uploadFormDescription.maxLength = MAX_COMMENT_LENGTH;
-uploadFormDescription.addEventListener('focus', onisCommentInputOnFocus);
-uploadFormDescription.addEventListener('blur', onCommentInputBlur);
-uploadEffectControl.addEventListener('change', onRadioControlEffectChange);
+uploadFileElement.addEventListener('change', onInputFileChange);
+uploadFormCancelElement.addEventListener('click', onCancelButtonClick);
+uploadFormDescriptionElement.maxLength = MAX_COMMENT_LENGTH;
+uploadFormDescriptionElement.addEventListener('focus', onisCommentInputOnFocus);
+uploadFormDescriptionElement.addEventListener('blur', onCommentInputBlur);
+uploadEffectControlElement.addEventListener('change', onRadioControlEffectChange);
 uploadResizeControlsButtonDec.addEventListener('click', onResizeControlsButtonDecClick);
 uploadResizeControlsButtonInc.addEventListener('click', onResizeControlsButtonInkClick);
-uploadFormDescription.addEventListener('change', onChangeCommentElement);
-uploadFormHashtags.addEventListener('change', onChangeTagsElement);
+uploadFormDescriptionElement.addEventListener('change', onChangeCommentElement);
+uploadFormHashtagsElement.addEventListener('change', onChangeTagsElement);
 form.addEventListener('submit', onFormSubmit);
