@@ -246,19 +246,15 @@ var resetHighlightElement = function (element) {
   element.style.borderColor = 'initial';
 };
 
-var validateTag = function (tag) {
-  return tag.length < MAX_HASHTAG_LENGTH && tag[0] === '#';
-};
-
-var onlyUnique = function (value, index, self) {
-  return self.indexOf(value) === index;
-};
-
 var validateTagsString = function (tagsString) {
   var possibleTags = tagsString.split(' ');
-  var uniqueTags = possibleTags.filter(onlyUnique);
+  var uniqueTags = possibleTags.filter(function (value, index, self) {
+    return self.indexOf(value) === index;
+  });
   var invalidTags = possibleTags
-      .map(validateTag)
+      .map(function (tag) {
+        return tag.length < MAX_HASHTAG_LENGTH && tag[0] === '#';
+      })
       .filter(function (validationResult) {
         return !validationResult;
       });
