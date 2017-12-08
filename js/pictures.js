@@ -256,13 +256,13 @@ var onlyUnique = function (value, index, self) {
 
 var validateTagsString = function (tagsString) {
   var possibleTags = tagsString.split(' ');
-
+  var uniqueTags = possibleTags.filter(onlyUnique);
   var invalidTags = possibleTags
       .map(validateTag)
       .filter(function (validationResult) {
         return !validationResult;
       });
-  return invalidTags.length === 0 && possibleTags.length <= MAX_QUANTITY_OF_HASHTAGS && !(possibleTags.length > possibleTags.filter(onlyUnique).length);
+  return invalidTags.length === 0 && possibleTags.length <= MAX_QUANTITY_OF_HASHTAGS && possibleTags.length === uniqueTags.length;
 };
 
 var validateTagsElement = function () {
