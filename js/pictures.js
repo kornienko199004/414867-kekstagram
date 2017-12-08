@@ -301,6 +301,12 @@ var onChangeCommentElement = function () {
 var onFormSubmit = function (e) {
   if (!validateCommentElement() || !validateTagsElement()) {
     e.preventDefault();
+    if (!validateTagsElement()) {
+      highlightElement(uploadFormHashtags, 'red');
+    }
+    if (!validateCommentElement()) {
+      highlightElement(uploadFormDescription, 'red');
+    }
   }
 };
 
