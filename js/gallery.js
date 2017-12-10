@@ -2,20 +2,20 @@
 
 (function () {
   var onDocumentKeydown = function (e) {
-    if (!window.units.hasClass(galleryOverlayElement, window.units.overlayHiddenClass) && (e.keyCode === window.units.codeESC)) {
-      window.units.addClass(galleryOverlayElement, window.units.overlayHiddenClass);
+    if (!window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass) && (e.keyCode === window.utilits.codeESC)) {
+      window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
     }
   };
 
   var onCloseButtonClick = function (e) {
     e.preventDefault();
-    window.units.addClass(galleryOverlayElement, window.units.overlayHiddenClass);
+    window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
   };
 
   var onCloseButtonKeydown = function (e) {
-    if (e.keyCode === window.units.codeEnter) {
+    if (e.keyCode === window.utilits.codeEnter) {
       e.preventDefault();
-      window.units.addClass(galleryOverlayElement, window.units.overlayHiddenClass);
+      window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
       if (lastPictureFocused) {
         lastPictureFocused.focus();
       }

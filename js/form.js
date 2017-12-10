@@ -24,8 +24,8 @@
   };
 
   var onInputFileChange = function () {
-    if (window.units.hasClass(uploadOverlay, window.units.overlayHiddenClass)) {
-      window.units.removeClass(uploadOverlay, window.units.overlayHiddenClass);
+    if (window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass)) {
+      window.utilits.removeClass(uploadOverlay, window.utilits.overlayHiddenClass);
       resetValues();
     }
   };
@@ -39,8 +39,8 @@
   };
 
   var onCancelButtonClick = function () {
-    if (!window.units.hasClass(uploadOverlay, window.units.overlayHiddenClass) && isCommentInputOnFocus !== 1) {
-      window.units.addClass(uploadOverlay, window.units.overlayHiddenClass);
+    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && isCommentInputOnFocus !== 1) {
+      window.utilits.addClass(uploadOverlay, window.utilits.overlayHiddenClass);
       uploadFileElement.value = '';
     }
   };
@@ -48,8 +48,8 @@
   var onRadioControlEffectChange = function (e) {
     var str = EFFECT_CLASS_NAME_PREFIX;
     var effectName = e.target.id.slice(str.length);
-    if (lastEffectName && window.units.hasClass(effectImagePreview, lastEffectName)) {
-      window.units.removeClass(effectImagePreview, lastEffectName);
+    if (lastEffectName && window.utilits.hasClass(effectImagePreview, lastEffectName)) {
+      window.utilits.removeClass(effectImagePreview, lastEffectName);
     }
     effectImagePreview.classList.add(effectName);
     lastEffectName = effectName;
@@ -119,8 +119,8 @@
   };
 
   var onDocumentKeydown = function (e) {
-    if (!window.units.hasClass(uploadOverlay, window.units.overlayHiddenClass) && e.keyCode === window.units.codeESC && isCommentInputOnFocus !== 1) {
-      window.units.addClass(uploadOverlay, window.units.overlayHiddenClass);
+    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && e.keyCode === window.utilits.codeESC && isCommentInputOnFocus !== 1) {
+      window.utilits.addClass(uploadOverlay, window.utilits.overlayHiddenClass);
       uploadFileElement.value = '';
     }
   };

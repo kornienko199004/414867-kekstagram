@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.units = {
+  window.utilits = {
     removeClass: function (objectName, className) {
       objectName.classList.remove(className);
     },

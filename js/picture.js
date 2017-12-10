@@ -4,7 +4,7 @@
   var render = function (template, data, mapper) {
     var node = template.cloneNode(true);
 
-    window.units.insertDataIntoNode(node, data, mapper);
+    window.utilits.insertDataIntoNode(node, data, mapper);
 
     return node;
   };

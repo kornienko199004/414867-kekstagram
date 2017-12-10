@@ -9,10 +9,10 @@
   };
 
   var showCurrentPhotoOverlay = function (element, galleryOverlayElement) {
-    if (window.units.hasClass(galleryOverlayElement, window.units.overlayHiddenClass)) {
-      window.units.removeClass(galleryOverlayElement, window.units.overlayHiddenClass);
+    if (window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass)) {
+      window.utilits.removeClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
     }
-    window.units.insertDataIntoNode(galleryOverlayElement,
+    window.utilits.insertDataIntoNode(galleryOverlayElement,
         {
           url: getAttribute(element, 'img', 'src'),
           comments: getAttribute(element, '.picture-comments', 'textContent'),
@@ -41,7 +41,7 @@
     },
 
     onPhotoKeydown: function (e, galleryOverlayElement) {
-      if (e.keyCode === window.units.codeEnter) {
+      if (e.keyCode === window.utilits.codeEnter) {
         showCurrentPhotoOverlay(e.target, galleryOverlayElement);
       }
     }
