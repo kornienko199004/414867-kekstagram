@@ -10,6 +10,8 @@
   var EFFECT_CLASS_NAME_PREFIX = 'upload-';
   var MAX_QUANTITY_OF_HASHTAGS = 5;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
+  var DEFAULT_FILTER_VALUE = 100;
+
   var setScale = function (scale) {
     effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
     uploadResizeControlsValue.value = scale + '%';
@@ -111,7 +113,7 @@
       if (uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
         uploadEffectLevel.classList.remove(OVERLAY_HIDDEN_CLASS);
       }
-      setFilter(filters(effectName, defaultFilterValue));
+      setFilter(filters(effectName, DEFAULT_FILTER_VALUE));
       resetFilter();
     } else {
       if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
@@ -276,7 +278,6 @@
   var uploadEffectLevelValElement = formElement.querySelector('.upload-effect-level-val');
   var uploadEffectLevel = formElement.querySelector('.upload-effect-level');
   var uploadEffectLevelValue = formElement.querySelector('.upload-effect-level-value');
-  var defaultFilterValue = effectImagePreview.style.filter;
   var defaultPositionOfSlider = uploadEffectLevelPinElement.style.left;
   var defaultWidth = uploadEffectLevelValElement.style.width;
   var defaultLeft = uploadEffectLevelValue.value;
