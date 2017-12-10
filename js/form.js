@@ -25,8 +25,8 @@
   };
 
   var onInputFileChange = function () {
-    if (window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass)) {
-      window.utilits.removeClass(uploadOverlay, window.utilits.overlayHiddenClass);
+    if (uploadOverlay.classList.contains(window.utilits.overlayHiddenClass)) {
+      uploadOverlay.classList.remove(window.utilits.overlayHiddenClass);
       resetValues();
     }
   };
@@ -40,8 +40,8 @@
   };
 
   var onCancelButtonClick = function () {
-    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && isCommentInputOnFocus !== 1) {
-      window.utilits.addClass(uploadOverlay, window.utilits.overlayHiddenClass);
+    if (!uploadOverlay.classList.contains(window.utilits.overlayHiddenClass) && isCommentInputOnFocus !== 1) {
+      uploadOverlay.classList.add(window.utilits.overlayHiddenClass);
       uploadFileElement.value = '';
     }
   };
@@ -49,8 +49,8 @@
   var onRadioControlEffectChange = function (e) {
     var str = EFFECT_CLASS_NAME_PREFIX;
     var effectName = e.target.id.slice(str.length);
-    if (lastEffectName && window.utilits.hasClass(effectImagePreview, lastEffectName)) {
-      window.utilits.removeClass(effectImagePreview, lastEffectName);
+    if (lastEffectName && effectImagePreview.classList.contains(lastEffectName)) {
+      effectImagePreview.classList.remove(lastEffectName);
     }
     effectImagePreview.classList.add(effectName);
     lastEffectName = effectName;
@@ -120,8 +120,8 @@
   };
 
   var onDocumentKeydown = function (e) {
-    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
-      window.utilits.addClass(uploadOverlay, window.utilits.overlayHiddenClass);
+    if (!uploadOverlay.classList.contains(window.utilits.overlayHiddenClass) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
+      uploadOverlay.classList.add(window.utilits.overlayHiddenClass);
       uploadFileElement.value = '';
     }
   };

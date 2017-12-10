@@ -2,18 +2,6 @@
 
 (function () {
   window.utilits = {
-    removeClass: function (objectName, className) {
-      objectName.classList.remove(className);
-    },
-
-    hasClass: function (element, className) {
-      return element.classList.contains(className);
-    },
-
-    addClass: function (element, className) {
-      element.classList.add(className);
-    },
-
     insertDataIntoNode: function (node, data, mapper) {
       Object.keys(data).forEach(function (key) {
         if (mapper[key]) {

@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var CODE_ENTER = 13;
+
   var getAttribute = function (element, selector, attribute) {
     if (element) {
       var value = element.querySelector(selector)[attribute];
@@ -9,8 +11,8 @@
   };
 
   var showCurrentPhotoOverlay = function (element, galleryOverlayElement) {
-    if (window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass)) {
-      window.utilits.removeClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
+    if (galleryOverlayElement.classList.contains(window.utilits.overlayHiddenClass)) {
+      galleryOverlayElement.classList.remove(window.utilits.overlayHiddenClass);
     }
     window.utilits.insertDataIntoNode(galleryOverlayElement,
         {
@@ -41,7 +43,7 @@
     },
 
     onPhotoKeydown: function (e, galleryOverlayElement) {
-      if (e.keyCode === window.utilits.codeEnter) {
+      if (e.keyCode === CODE_ENTER) {
         showCurrentPhotoOverlay(e.target, galleryOverlayElement);
       }
     }

@@ -5,20 +5,20 @@
   var CODE_ENTER = 13;
 
   var onDocumentKeydown = function (e) {
-    if (!window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass) && (e.keyCode === CODE_ESC)) {
-      window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
+    if (!galleryOverlayElement.classList.contains(window.utilits.overlayHiddenClass) && (e.keyCode === CODE_ESC)) {
+      galleryOverlayElement.classList.add(window.utilits.overlayHiddenClass);
     }
   };
 
   var onCloseButtonClick = function (e) {
     e.preventDefault();
-    window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
+    galleryOverlayElement.classList.add(window.utilits.overlayHiddenClass);
   };
 
   var onCloseButtonKeydown = function (e) {
     if (e.keyCode === CODE_ENTER) {
       e.preventDefault();
-      window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
+      galleryOverlayElement.classList.add(window.utilits.overlayHiddenClass);
       if (lastPictureFocused) {
         lastPictureFocused.focus();
       }
