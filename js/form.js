@@ -22,6 +22,14 @@
     effect.checked = defaultEffect;
     uploadFormHashtagsElement.value = '';
     uploadFormDescriptionElement.value = '';
+    resetFilter();
+    setFilter('none');
+  };
+
+  var resetFilter = function () {
+    uploadEffectLevelPinElement.style.left = defaultPositionOfSlider;
+    uploadEffectLevelValElement.style.width = defaultWidth;
+    uploadEffectLevelValue.value = defaultLeft;
   };
 
   var onInputFileChange = function () {
@@ -44,15 +52,74 @@
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
+    if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+    }
+  };
+
+  var aproximation = function (maxValueOfNewRange, maxValueOfProcess, value, unit) {
+    var coefficient = maxValueOfNewRange / maxValueOfProcess;
+    var output = value * coefficient;
+    if (unit) {
+      output = output + unit;
+    }
+    return output > maxValueOfNewRange ? maxValueOfNewRange : output;
+  };
+
+  var filters = function (effectName, currentValue) {
+    var outputFilter;
+    var maxValueOfProcess = 100;
+    var list = {
+      'effect-chrome': function (value) {
+        return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
+      },
+      'effect-sepia': function (value) {
+        return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
+      },
+      'effect-marvin': function (value) {
+        return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
+      },
+      'effect-phobos': function (value) {
+        return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
+      },
+      'effect-heat': function (value) {
+        return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
+      }
+    };
+    Object.keys(list).forEach(function (key) {
+      if (key === effectName) {
+        outputFilter = list[key](currentValue);
+      }
+    });
+    return outputFilter;
+  };
+  var setFilter = function (filter) {
+    effectImagePreview.style.filter = filter;
   };
 
   var onRadioControlEffectChange = function (e) {
     var str = EFFECT_CLASS_NAME_PREFIX;
     var effectName = e.target.id.slice(str.length);
+
     if (lastEffectName && effectImagePreview.classList.contains(lastEffectName)) {
       effectImagePreview.classList.remove(lastEffectName);
     }
+
     effectImagePreview.classList.add(effectName);
+
+    if (effectName !== 'effect-none') {
+      if (uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+        uploadEffectLevel.classList.remove(OVERLAY_HIDDEN_CLASS);
+      }
+      setFilter(filters(effectName, defaultFilterValue));
+      resetFilter();
+    } else {
+      if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+        uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+      }
+      setFilter('none');
+    }
+
     lastEffectName = effectName;
   };
 
@@ -81,6 +148,9 @@
   };
 
   var validateTagsString = function (tagsString) {
+    if (!tagsString) {
+      return true;
+    }
     var possibleTags = tagsString.split(' ');
     var uniqueTags = possibleTags.filter(function (value, index, self) {
       return self.indexOf(value) === index;
@@ -124,6 +194,9 @@
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
+    if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+    }
   };
 
   var onFormSubmit = function (e) {
@@ -139,6 +212,46 @@
       }
     }
   };
+
+  var onSliderPinMouseDown = function (e) {
+    e.preventDefault();
+    var maxWidthOfSlider = uploadEffectLevelLineElement.offsetWidth;
+    var startCoords = {
+      x: e.clientX
+    };
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX
+      };
+
+      startCoords = {
+        x: moveEvt.clientX
+      };
+      var left;
+      left = (uploadEffectLevelPinElement.offsetLeft - shift.x);
+      if (left <= 0) {
+        left = 0;
+      } else if (left >= maxWidthOfSlider) {
+        left = maxWidthOfSlider;
+      }
+      uploadEffectLevelPinElement.style.left = left + 'px';
+      uploadEffectLevelValElement.style.width = left + 'px';
+      uploadEffectLevelValue.value = Math.round((left / maxWidthOfSlider) * 100);
+
+      setFilter(filters(lastEffectName, uploadEffectLevelValue.value));
+
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
   var formElement = document.querySelector('.upload-form');
   var uploadFileElement = formElement.querySelector('#upload-file');
   var uploadOverlay = formElement.querySelector('.upload-overlay');
@@ -158,6 +271,18 @@
   var lastEffectName;
   var isCommentInputOnFocus;
 
+  var uploadEffectLevelPinElement = formElement.querySelector('.upload-effect-level-pin');
+  var uploadEffectLevelLineElement = formElement.querySelector('.upload-effect-level-line');
+  var uploadEffectLevelValElement = formElement.querySelector('.upload-effect-level-val');
+  var uploadEffectLevel = formElement.querySelector('.upload-effect-level');
+  var uploadEffectLevelValue = formElement.querySelector('.upload-effect-level-value');
+  var defaultFilterValue = effectImagePreview.style.filter;
+  var defaultPositionOfSlider = uploadEffectLevelPinElement.style.left;
+  var defaultWidth = uploadEffectLevelValElement.style.width;
+  var defaultLeft = uploadEffectLevelValue.value;
+
+  uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+
   formElement.action = 'https://js.dump.academy/kekstagram';
   uploadResizeControlsValue.step = SCALE_STEP;
 
@@ -173,4 +298,6 @@
   uploadFormHashtagsElement.addEventListener('change', onChangeTagsElement);
   document.addEventListener('keydown', onDocumentKeydown);
   formElement.addEventListener('submit', onFormSubmit);
+
+  uploadEffectLevelPinElement.addEventListener('mousedown', onSliderPinMouseDown);
 })();
