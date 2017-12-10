@@ -178,10 +178,14 @@ var onDocumentKeydown = function (e) {
   }
 };
 
-var resetValues = function () {
-  scale = defaultScale;
+var setScale = function (scale) {
   effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
   uploadResizeControlsValue.value = scale + '%';
+};
+
+var resetValues = function () {
+  scale = defaultScale;
+  setScale(scale);
   effectImagePreview.className = defaultEffectClassName;
   effect.checked = defaultEffect;
   uploadFormHashtagsElement.value = '';
@@ -225,8 +229,7 @@ var onResizeControlsButtonDecClick = function () {
   if (scale < MIN_SCALE) {
     scale = MIN_SCALE;
   }
-  effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
-  uploadResizeControlsValue.value = scale + '%';
+  setScale(scale);
 };
 
 var onResizeControlsButtonInkClick = function () {
@@ -234,8 +237,7 @@ var onResizeControlsButtonInkClick = function () {
   if (scale > MAX_SCALE) {
     scale = MAX_SCALE;
   }
-  effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
-  uploadResizeControlsValue.value = scale + '%';
+  setScale(scale);
 };
 
 var highlightElement = function (element, color) {
