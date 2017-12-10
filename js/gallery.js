@@ -30,11 +30,10 @@
   var galleryOverlayElement = document.querySelector('.gallery-overlay');
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
   var lastPictureFocused;
-  var pictures = window.generatePictures(25);
 
   galleryOverlayElementCloseElement.tabIndex = 0;
 
-  var pictureList = window.renderer.renderList(pictureTemplateElement, pictures, {
+  var pictureList = window.renderer.renderList(pictureTemplateElement, window.generatePictures(25), {
     url: ['img', 'src'],
     comments: ['.picture-comments', 'textContent'],
     likes: ['.picture-likes', 'textContent']
