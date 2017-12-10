@@ -2,7 +2,7 @@
 
 (function () {
   var onDocumentKeydown = function (e) {
-    if (!window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass) && (e.keyCode === window.utilits.codeESC)) {
+    if (!window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass) && (e.keyCode === codeESC)) {
       window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
     }
   };
@@ -13,7 +13,7 @@
   };
 
   var onCloseButtonKeydown = function (e) {
-    if (e.keyCode === window.utilits.codeEnter) {
+    if (e.keyCode === codeEnter) {
       e.preventDefault();
       window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
       if (lastPictureFocused) {
@@ -27,6 +27,8 @@
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
   var lastPictureFocused;
   var pictures = [];
+  var codeESC = 27;
+  var codeEnter = 13;
 
   for (var i = 1; i <= 25; i++) {
     pictures.push(window.data.generatePicture(i));

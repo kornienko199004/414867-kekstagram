@@ -29,8 +29,6 @@
       });
     },
 
-    overlayHiddenClass: 'hidden',
-    codeESC: 27,
-    codeEnter: 13
+    overlayHiddenClass: 'hidden'
   };
 })();

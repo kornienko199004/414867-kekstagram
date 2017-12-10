@@ -119,7 +119,7 @@
   };
 
   var onDocumentKeydown = function (e) {
-    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && e.keyCode === window.utilits.codeESC && isCommentInputOnFocus !== 1) {
+    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && e.keyCode === codeESC && isCommentInputOnFocus !== 1) {
       window.utilits.addClass(uploadOverlay, window.utilits.overlayHiddenClass);
       uploadFileElement.value = '';
     }
@@ -156,6 +156,7 @@
   var defaultEffectClassName = effectImagePreview.className;
   var lastEffectName;
   var isCommentInputOnFocus;
+  var codeESC = 27;
 
   form.action = 'https://js.dump.academy/kekstagram';
   uploadResizeControlsValue.step = SCALE_STEP;
