@@ -4,6 +4,7 @@
   var CODE_ESC = 27;
   var CODE_ENTER = 13;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
+  var PICTURES_QUANTITY = 25;
 
   var onDocumentKeydown = function (e) {
     if (!galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS) && (e.keyCode === CODE_ESC)) {
@@ -33,7 +34,7 @@
 
   galleryOverlayElementCloseElement.tabIndex = 0;
 
-  var pictureList = window.renderer.renderList(pictureTemplateElement, window.generatePictures(25), {
+  var pictureList = window.renderer.renderList(pictureTemplateElement, window.generatePictures(PICTURES_QUANTITY), {
     url: ['img', 'src'],
     comments: ['.picture-comments', 'textContent'],
     likes: ['.picture-likes', 'textContent']
