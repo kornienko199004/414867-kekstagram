@@ -30,7 +30,7 @@
     }
   };
 
-  var onisCommentInputOnFocus = function () {
+  var onCommentInputOnFocus = function () {
     isCommentInputOnFocus = 1;
   };
 
@@ -163,7 +163,7 @@
   uploadFileElement.addEventListener('change', onInputFileChange);
   uploadFormCancelElement.addEventListener('click', onCancelButtonClick);
   uploadFormDescriptionElement.maxLength = MAX_COMMENT_LENGTH;
-  uploadFormDescriptionElement.addEventListener('focus', onisCommentInputOnFocus);
+  uploadFormDescriptionElement.addEventListener('focus', onCommentInputOnFocus);
   uploadFormDescriptionElement.addEventListener('blur', onCommentInputBlur);
   uploadEffectControlElement.addEventListener('change', onRadioControlEffectChange);
   uploadResizeControlsButtonDec.addEventListener('click', onResizeControlsButtonDecClick);
