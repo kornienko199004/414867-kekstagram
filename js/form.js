@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var CODE_ESC = 27;
   var SCALE_STEP = 25;
   var MIN_SCALE = 25;
   var MAX_SCALE = 100;
@@ -119,7 +120,7 @@
   };
 
   var onDocumentKeydown = function (e) {
-    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && e.keyCode === codeESC && isCommentInputOnFocus !== 1) {
+    if (!window.utilits.hasClass(uploadOverlay, window.utilits.overlayHiddenClass) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
       window.utilits.addClass(uploadOverlay, window.utilits.overlayHiddenClass);
       uploadFileElement.value = '';
     }
@@ -156,7 +157,6 @@
   var defaultEffectClassName = effectImagePreview.className;
   var lastEffectName;
   var isCommentInputOnFocus;
-  var codeESC = 27;
 
   form.action = 'https://js.dump.academy/kekstagram';
   uploadResizeControlsValue.step = SCALE_STEP;

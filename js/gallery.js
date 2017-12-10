@@ -1,8 +1,11 @@
 'use strict';
 
 (function () {
+  var CODE_ESC = 27;
+  var CODE_ENTER = 13;
+
   var onDocumentKeydown = function (e) {
-    if (!window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass) && (e.keyCode === codeESC)) {
+    if (!window.utilits.hasClass(galleryOverlayElement, window.utilits.overlayHiddenClass) && (e.keyCode === CODE_ESC)) {
       window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
     }
   };
@@ -13,7 +16,7 @@
   };
 
   var onCloseButtonKeydown = function (e) {
-    if (e.keyCode === codeEnter) {
+    if (e.keyCode === CODE_ENTER) {
       e.preventDefault();
       window.utilits.addClass(galleryOverlayElement, window.utilits.overlayHiddenClass);
       if (lastPictureFocused) {
@@ -27,8 +30,6 @@
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
   var lastPictureFocused;
   var pictures = window.generatePictures(25);
-  var codeESC = 27;
-  var codeEnter = 13;
 
   galleryOverlayElementCloseElement.tabIndex = 0;
 
