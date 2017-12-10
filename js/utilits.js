@@ -15,8 +15,6 @@
           }
         }
       });
-    },
-
-    overlayHiddenClass: 'hidden'
+    }
   };
 })();

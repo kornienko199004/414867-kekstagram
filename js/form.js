@@ -139,26 +139,26 @@
       }
     }
   };
-  var form = document.querySelector('.upload-form');
-  var uploadFileElement = form.querySelector('#upload-file');
-  var uploadOverlay = form.querySelector('.upload-overlay');
-  var uploadFormCancelElement = form.querySelector('.upload-form-cancel');
-  var uploadFormDescriptionElement = form.querySelector('.upload-form-description');
-  var uploadResizeControlsValue = form.querySelector('.upload-resize-controls-value');
-  var uploadEffectControlElement = form.querySelector('.upload-effect-controls');
-  var effectImagePreview = form.querySelector('.effect-image-preview');
-  var uploadFormHashtagsElement = form.querySelector('.upload-form-hashtags');
-  var uploadResizeControlsButtonDec = form.querySelector('.upload-resize-controls-button-dec');
-  var uploadResizeControlsButtonInc = form.querySelector('.upload-resize-controls-button-inc');
+  var formElement = document.querySelector('.upload-form');
+  var uploadFileElement = formElement.querySelector('#upload-file');
+  var uploadOverlay = formElement.querySelector('.upload-overlay');
+  var uploadFormCancelElement = formElement.querySelector('.upload-form-cancel');
+  var uploadFormDescriptionElement = formElement.querySelector('.upload-form-description');
+  var uploadResizeControlsValue = formElement.querySelector('.upload-resize-controls-value');
+  var uploadEffectControlElement = formElement.querySelector('.upload-effect-controls');
+  var effectImagePreview = formElement.querySelector('.effect-image-preview');
+  var uploadFormHashtagsElement = formElement.querySelector('.upload-form-hashtags');
+  var uploadResizeControlsButtonDec = formElement.querySelector('.upload-resize-controls-button-dec');
+  var uploadResizeControlsButtonInc = formElement.querySelector('.upload-resize-controls-button-inc');
   var scale;
-  var effect = form.querySelector('[name=effect]');
+  var effect = formElement.querySelector('[name=effect]');
   var defaultEffect = effect.checked;
   var defaultScale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1);
   var defaultEffectClassName = effectImagePreview.className;
   var lastEffectName;
   var isCommentInputOnFocus;
 
-  form.action = 'https://js.dump.academy/kekstagram';
+  formElement.action = 'https://js.dump.academy/kekstagram';
   uploadResizeControlsValue.step = SCALE_STEP;
 
   uploadFileElement.addEventListener('change', onInputFileChange);
@@ -172,5 +172,5 @@
   uploadFormDescriptionElement.addEventListener('change', onChangeCommentElement);
   uploadFormHashtagsElement.addEventListener('change', onChangeTagsElement);
   document.addEventListener('keydown', onDocumentKeydown);
-  form.addEventListener('submit', onFormSubmit);
+  formElement.addEventListener('submit', onFormSubmit);
 })();
