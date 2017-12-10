@@ -26,9 +26,15 @@
   var galleryOverlayElement = document.querySelector('.gallery-overlay');
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
   var lastPictureFocused;
+  var pictures = [];
+
+  for (var i = 1; i <= 25; i++) {
+    pictures.push(window.data.generatePicture(i));
+  }
+
   galleryOverlayElementCloseElement.tabIndex = 0;
 
-  var pictureList = window.picture.renderList(pictureTemplateElement, window.data.pictures, {
+  var pictureList = window.picture.renderList(pictureTemplateElement, pictures, {
     url: ['img', 'src'],
     comments: ['.picture-comments', 'textContent'],
     likes: ['.picture-likes', 'textContent']

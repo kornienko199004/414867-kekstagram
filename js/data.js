@@ -34,28 +34,21 @@
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
 
-  var generatePicture = function (photoIndex) {
-    var numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
-    var numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
-    var comments = [];
-    while (numbersOfCommentRows >= 1) {
-      comments.push(COMMENTS[generateRandomCommentIndex()]);
-      numbersOfCommentRows--;
-    }
-
-    return {
-      url: 'photos/' + photoIndex + '.jpg',
-      likes: numbersOfLikes,
-      comments: comments
-    };
-  };
-
-  var pictures = [];
-
-  for (var i = 1; i <= 25; i++) {
-    pictures.push(generatePicture(i));
-  }
   window.data = {
-    pictures: pictures
+    generatePicture: function (photoIndex) {
+      var numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
+      var numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
+      var comments = [];
+      while (numbersOfCommentRows >= 1) {
+        comments.push(COMMENTS[generateRandomCommentIndex()]);
+        numbersOfCommentRows--;
+      }
+
+      return {
+        url: 'photos/' + photoIndex + '.jpg',
+        likes: numbersOfLikes,
+        comments: comments
+      };
+    }
   };
 })();
