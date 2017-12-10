@@ -34,21 +34,28 @@
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
 
-  window.data = {
-    generatePicture: function (photoIndex) {
-      var numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
-      var numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
-      var comments = [];
-      while (numbersOfCommentRows >= 1) {
-        comments.push(COMMENTS[generateRandomCommentIndex()]);
-        numbersOfCommentRows--;
-      }
-
-      return {
-        url: 'photos/' + photoIndex + '.jpg',
-        likes: numbersOfLikes,
-        comments: comments
-      };
+  var generatePicture = function (photoIndex) {
+    var numbersOfLikes = generateRandomNumber(MIN_QUANTITY_OF_LIKES, MAX_QUANTITY_OF_LIKES);
+    var numbersOfCommentRows = generateRandomNumber(MIN_QUANTITY_OF_COMMENT_ROWS, MAX_QUANTITY_OF_COMMENT_ROWS);
+    var comments = [];
+    while (numbersOfCommentRows >= 1) {
+      comments.push(COMMENTS[generateRandomCommentIndex()]);
+      numbersOfCommentRows--;
     }
+
+    return {
+      url: 'photos/' + photoIndex + '.jpg',
+      likes: numbersOfLikes,
+      comments: comments
+    };
   };
+  var generatePictures = function (total) {
+    var pictures = [];
+    for (var i = 1; i <= total; i++) {
+      pictures.push(generatePicture(i));
+    }
+    return pictures;
+  };
+
+  window.generatePictures = generatePictures;
 })();

@@ -26,13 +26,9 @@
   var galleryOverlayElement = document.querySelector('.gallery-overlay');
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
   var lastPictureFocused;
-  var pictures = [];
+  var pictures = window.generatePictures(25);
   var codeESC = 27;
   var codeEnter = 13;
-
-  for (var i = 1; i <= 25; i++) {
-    pictures.push(window.data.generatePicture(i));
-  }
 
   galleryOverlayElementCloseElement.tabIndex = 0;
 
