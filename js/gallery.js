@@ -34,7 +34,7 @@
 
   galleryOverlayElementCloseElement.tabIndex = 0;
 
-  var pictureList = window.picture.renderList(pictureTemplateElement, pictures, {
+  var pictureList = window.renderer.renderList(pictureTemplateElement, pictures, {
     url: ['img', 'src'],
     comments: ['.picture-comments', 'textContent'],
     likes: ['.picture-likes', 'textContent']

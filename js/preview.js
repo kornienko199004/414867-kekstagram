@@ -15,7 +15,7 @@
     if (galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
       galleryOverlayElement.classList.remove(OVERLAY_HIDDEN_CLASS);
     }
-    window.utilits.insertDataIntoNode(galleryOverlayElement,
+    window.renderer.insertDataIntoNode(galleryOverlayElement,
         {
           url: getAttribute(element, 'img', 'src'),
           comments: getAttribute(element, '.picture-comments', 'textContent'),
