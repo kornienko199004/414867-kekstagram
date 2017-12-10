@@ -9,7 +9,7 @@
   var MAX_HASHTAG_LENGTH = 20;
   var EFFECT_CLASS_NAME_PREFIX = 'upload-';
   var MAX_QUANTITY_OF_HASHTAGS = 5;
-
+  var OVERLAY_HIDDEN_CLASS = 'hidden';
   var setScale = function (scale) {
     effectImagePreview.style.transform = 'scale(' + scale / 100 + ')';
     uploadResizeControlsValue.value = scale + '%';
@@ -25,8 +25,8 @@
   };
 
   var onInputFileChange = function () {
-    if (uploadOverlay.classList.contains(window.utilits.overlayHiddenClass)) {
-      uploadOverlay.classList.remove(window.utilits.overlayHiddenClass);
+    if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
       resetValues();
     }
   };
@@ -40,8 +40,8 @@
   };
 
   var onCancelButtonClick = function () {
-    if (!uploadOverlay.classList.contains(window.utilits.overlayHiddenClass) && isCommentInputOnFocus !== 1) {
-      uploadOverlay.classList.add(window.utilits.overlayHiddenClass);
+    if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && isCommentInputOnFocus !== 1) {
+      uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
   };
@@ -120,8 +120,8 @@
   };
 
   var onDocumentKeydown = function (e) {
-    if (!uploadOverlay.classList.contains(window.utilits.overlayHiddenClass) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
-      uploadOverlay.classList.add(window.utilits.overlayHiddenClass);
+    if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
+      uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
   };

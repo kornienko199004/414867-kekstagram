@@ -2,6 +2,7 @@
 
 (function () {
   var CODE_ENTER = 13;
+  var OVERLAY_HIDDEN_CLASS = 'hidden';
 
   var getAttribute = function (element, selector, attribute) {
     if (element) {
@@ -11,8 +12,8 @@
   };
 
   var showCurrentPhotoOverlay = function (element, galleryOverlayElement) {
-    if (galleryOverlayElement.classList.contains(window.utilits.overlayHiddenClass)) {
-      galleryOverlayElement.classList.remove(window.utilits.overlayHiddenClass);
+    if (galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      galleryOverlayElement.classList.remove(OVERLAY_HIDDEN_CLASS);
     }
     window.utilits.insertDataIntoNode(galleryOverlayElement,
         {

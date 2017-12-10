@@ -3,22 +3,23 @@
 (function () {
   var CODE_ESC = 27;
   var CODE_ENTER = 13;
+  var OVERLAY_HIDDEN_CLASS = 'hidden';
 
   var onDocumentKeydown = function (e) {
-    if (!galleryOverlayElement.classList.contains(window.utilits.overlayHiddenClass) && (e.keyCode === CODE_ESC)) {
-      galleryOverlayElement.classList.add(window.utilits.overlayHiddenClass);
+    if (!galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS) && (e.keyCode === CODE_ESC)) {
+      galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
     }
   };
 
   var onCloseButtonClick = function (e) {
     e.preventDefault();
-    galleryOverlayElement.classList.add(window.utilits.overlayHiddenClass);
+    galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
   };
 
   var onCloseButtonKeydown = function (e) {
     if (e.keyCode === CODE_ENTER) {
       e.preventDefault();
-      galleryOverlayElement.classList.add(window.utilits.overlayHiddenClass);
+      galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
       if (lastPictureFocused) {
         lastPictureFocused.focus();
       }
