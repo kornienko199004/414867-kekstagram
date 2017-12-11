@@ -68,7 +68,7 @@
     return output > maxValueOfNewRange ? maxValueOfNewRange : output;
   };
 
-  var filters = function (effectName, currentValue) {
+  var returnFilterEffect = function (effectName, currentValue) {
     var outputFilter;
     var maxValueOfProcess = 100;
     var list = {
@@ -113,7 +113,7 @@
       if (uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
         uploadEffectLevel.classList.remove(OVERLAY_HIDDEN_CLASS);
       }
-      setFilter(filters(effectName, DEFAULT_FILTER_VALUE));
+      setFilter(returnFilterEffect(effectName, DEFAULT_FILTER_VALUE));
       resetFilter();
     } else {
       if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
@@ -242,7 +242,7 @@
       uploadEffectLevelValElement.style.width = left + 'px';
       uploadEffectLevelValue.value = Math.round((left / maxWidthOfSlider) * 100);
 
-      setFilter(filters(lastEffectName, uploadEffectLevelValue.value));
+      setFilter(returnFilterEffect(lastEffectName, uploadEffectLevelValue.value));
 
     };
     var onMouseUp = function (upEvt) {
