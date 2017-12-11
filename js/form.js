@@ -69,32 +69,40 @@
   };
 
   var returnFilterEffect = function (effectName, currentValue) {
-    var outputFilter;
     var maxValueOfProcess = 100;
-    var list = {
-      'effect-chrome': function (value) {
-        return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
-      },
-      'effect-sepia': function (value) {
-        return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
-      },
-      'effect-marvin': function (value) {
-        return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
-      },
-      'effect-phobos': function (value) {
-        return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
-      },
-      'effect-heat': function (value) {
-        return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
-      }
-    };
-    Object.keys(list).forEach(function (key) {
-      if (key === effectName) {
-        outputFilter = list[key](currentValue);
-      }
-    });
-    return outputFilter;
+    var outputFilter;
+    switch (effectName) {
+      case 'effect-chrome':
+        outputFilter = function (value) {
+          return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
+        };
+        break;
+      case 'effect-sepia':
+        outputFilter = function (value) {
+          return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
+        };
+        break;
+      case 'effect-marvin':
+        outputFilter = function (value) {
+          return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
+        };
+        break;
+      case 'effect-phobos':
+        outputFilter = function (value) {
+          return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
+        };
+        break;
+      case 'effect-heat':
+        outputFilter = function (value) {
+          return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
+        };
+        break;
+      default:
+        break;
+    }
+    return outputFilter(currentValue);
   };
+
   var setFilter = function (filter) {
     effectImagePreview.style.filter = filter;
   };
