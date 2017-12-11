@@ -70,37 +70,31 @@
 
   var returnFilterEffect = function (effectName, currentValue) {
     var maxValueOfProcess = 100;
-    var outputFilter;
     switch (effectName) {
       case 'effect-chrome':
-        outputFilter = function (value) {
+        return function (value) {
           return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
-        };
-        break;
+        }(currentValue);
       case 'effect-sepia':
-        outputFilter = function (value) {
+        return function (value) {
           return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
-        };
-        break;
+        }(currentValue);
       case 'effect-marvin':
-        outputFilter = function (value) {
+        return function (value) {
           return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
-        };
-        break;
+        }(currentValue);
       case 'effect-phobos':
-        outputFilter = function (value) {
+        return function (value) {
           return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
-        };
-        break;
+        }(currentValue);
       case 'effect-heat':
-        outputFilter = function (value) {
+        return function (value) {
           return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
-        };
-        break;
+        }(currentValue);
       default:
         break;
     }
-    return outputFilter(currentValue);
+    return 'none';
   };
 
   var setFilter = function (filter) {
