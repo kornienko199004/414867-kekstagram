@@ -210,15 +210,13 @@
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var shift = startCoords - moveEvt.clientX;
-
-      startCoords = moveEvt.clientX;
-      var left = (uploadEffectLevelPinElement.offsetLeft - shift);
+      var left = (uploadEffectLevelPinElement.offsetLeft - (startCoords - moveEvt.clientX));
       if (left <= 0) {
         left = 0;
       } else if (left >= maxWidthOfSlider) {
         left = maxWidthOfSlider;
       }
+      startCoords = moveEvt.clientX;
       uploadEffectLevelPinElement.style.left = left + 'px';
       uploadEffectLevelValElement.style.width = left + 'px';
       uploadEffectLevelValue.value = Math.round((left / maxWidthOfSlider) * 100);
