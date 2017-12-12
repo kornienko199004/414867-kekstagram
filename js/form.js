@@ -59,12 +59,9 @@
     }
   };
 
-  var aproximation = function (maxValueOfNewRange, maxValueOfProcess, value, unit) {
+  var aproximation = function (maxValueOfNewRange, maxValueOfProcess, value) {
     var coefficient = maxValueOfNewRange / maxValueOfProcess;
     var output = value * coefficient;
-    if (unit) {
-      output = output + unit;
-    }
     return output > maxValueOfNewRange ? maxValueOfNewRange : output;
   };
 
@@ -76,9 +73,9 @@
       case 'effect-sepia':
         return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
       case 'effect-marvin':
-        return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
+        return 'invert(' + aproximation(100, maxValueOfProcess, value) + '%)';
       case 'effect-phobos':
-        return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
+        return 'blur(' + aproximation(3, maxValueOfProcess, value) + 'px)';
       case 'effect-heat':
         return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
       default:
