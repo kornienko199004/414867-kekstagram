@@ -206,21 +206,14 @@
   var onSliderPinMouseDown = function (e) {
     e.preventDefault();
     var maxWidthOfSlider = uploadEffectLevelLineElement.offsetWidth;
-    var startCoords = {
-      x: e.clientX
-    };
+    var startCoords = e.clientX;
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var shift = {
-        x: startCoords.x - moveEvt.clientX
-      };
+      var shift = startCoords - moveEvt.clientX;
 
-      startCoords = {
-        x: moveEvt.clientX
-      };
-      var left;
-      left = (uploadEffectLevelPinElement.offsetLeft - shift.x);
+      startCoords = moveEvt.clientX;
+      var left = (uploadEffectLevelPinElement.offsetLeft - shift);
       if (left <= 0) {
         left = 0;
       } else if (left >= maxWidthOfSlider) {
