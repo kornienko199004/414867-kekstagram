@@ -68,29 +68,19 @@
     return output > maxValueOfNewRange ? maxValueOfNewRange : output;
   };
 
-  var createFilterEffect = function (effectName, currentValue) {
+  var createFilterEffect = function (effectName, value) {
     var maxValueOfProcess = 100;
     switch (effectName) {
       case 'effect-chrome':
-        return function (value) {
-          return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
-        }(currentValue);
+        return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
       case 'effect-sepia':
-        return function (value) {
-          return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
-        }(currentValue);
+        return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
       case 'effect-marvin':
-        return function (value) {
-          return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
-        }(currentValue);
+        return 'invert(' + aproximation(100, maxValueOfProcess, value, '%') + ')';
       case 'effect-phobos':
-        return function (value) {
-          return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
-        }(currentValue);
+        return 'blur(' + aproximation(3, maxValueOfProcess, value, 'px') + ')';
       case 'effect-heat':
-        return function (value) {
-          return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
-        }(currentValue);
+        return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
       default:
         break;
     }
