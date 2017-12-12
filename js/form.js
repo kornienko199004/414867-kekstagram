@@ -34,6 +34,11 @@
     uploadEffectLevelValue.value = defaultLeft;
   };
 
+  var hideSlider = function () {
+    if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+    }
+  };
   var onInputFileChange = function () {
     if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
       uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
@@ -54,9 +59,7 @@
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
-    if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-      uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
-    }
+    hideSlider();
   };
 
   var aproximation = function (maxValueOfNewRange, maxValueOfProcess, value) {
@@ -105,9 +108,7 @@
       setFilter(createFilterEffect(effectName, DEFAULT_FILTER_VALUE));
       resetSlider();
     } else {
-      if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-        uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
-      }
+      hideSlider();
       setFilter('none');
     }
 
@@ -185,9 +186,7 @@
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
-    if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-      uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
-    }
+    hideSlider();
   };
 
   var onFormSubmit = function (e) {
