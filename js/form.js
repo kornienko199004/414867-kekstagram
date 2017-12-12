@@ -24,11 +24,11 @@
     effect.checked = defaultEffect;
     uploadFormHashtagsElement.value = '';
     uploadFormDescriptionElement.value = '';
-    resetSlider();
+    resetSliderPosition();
     setFilter('none');
   };
 
-  var resetSlider = function () {
+  var resetSliderPosition = function () {
     uploadEffectLevelPinElement.style.left = defaultPositionOfSlider;
     uploadEffectLevelValElement.style.width = defaultWidth;
     uploadEffectLevelValue.value = defaultLeft;
@@ -106,7 +106,7 @@
         uploadEffectLevel.classList.remove(OVERLAY_HIDDEN_CLASS);
       }
       setFilter(createFilterEffect(effectName, DEFAULT_FILTER_VALUE));
-      resetSlider();
+      resetSliderPosition();
     } else {
       hideSlider();
       setFilter('none');
