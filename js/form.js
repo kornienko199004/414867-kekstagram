@@ -35,8 +35,8 @@
   };
 
   var hideSlider = function () {
-    if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-      uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+    if (!uploadEffectLevelElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      uploadEffectLevelElement.classList.add(OVERLAY_HIDDEN_CLASS);
     }
   };
   var onInputFileChange = function () {
@@ -102,8 +102,8 @@
     effectImagePreview.classList.add(effectName);
 
     if (effectName !== 'effect-none') {
-      if (uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-        uploadEffectLevel.classList.remove(OVERLAY_HIDDEN_CLASS);
+      if (uploadEffectLevelElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+        uploadEffectLevelElement.classList.remove(OVERLAY_HIDDEN_CLASS);
       }
       setFilter(createFilterEffect(effectName, DEFAULT_FILTER_VALUE));
       resetSliderPosition();
@@ -257,13 +257,13 @@
   var uploadEffectLevelPinElement = formElement.querySelector('.upload-effect-level-pin');
   var uploadEffectLevelLineElement = formElement.querySelector('.upload-effect-level-line');
   var uploadEffectLevelValElement = formElement.querySelector('.upload-effect-level-val');
-  var uploadEffectLevel = formElement.querySelector('.upload-effect-level');
+  var uploadEffectLevelElement = formElement.querySelector('.upload-effect-level');
   var uploadEffectLevelValue = formElement.querySelector('.upload-effect-level-value');
   var defaultPositionOfSlider = uploadEffectLevelPinElement.style.left;
   var defaultWidth = uploadEffectLevelValElement.style.width;
   var defaultLeft = uploadEffectLevelValue.value;
 
-  uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
+  uploadEffectLevelElement.classList.add(OVERLAY_HIDDEN_CLASS);
 
   formElement.action = 'https://js.dump.academy/kekstagram';
   uploadResizeControlsValue.step = SCALE_STEP;
