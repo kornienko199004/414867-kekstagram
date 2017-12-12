@@ -24,11 +24,11 @@
     effect.checked = defaultEffect;
     uploadFormHashtagsElement.value = '';
     uploadFormDescriptionElement.value = '';
-    resetFilter();
+    resetSlider();
     setFilter('none');
   };
 
-  var resetFilter = function () {
+  var resetSlider = function () {
     uploadEffectLevelPinElement.style.left = defaultPositionOfSlider;
     uploadEffectLevelValElement.style.width = defaultWidth;
     uploadEffectLevelValue.value = defaultLeft;
@@ -103,7 +103,7 @@
         uploadEffectLevel.classList.remove(OVERLAY_HIDDEN_CLASS);
       }
       setFilter(createFilterEffect(effectName, DEFAULT_FILTER_VALUE));
-      resetFilter();
+      resetSlider();
     } else {
       if (!uploadEffectLevel.classList.contains(OVERLAY_HIDDEN_CLASS)) {
         uploadEffectLevel.classList.add(OVERLAY_HIDDEN_CLASS);
