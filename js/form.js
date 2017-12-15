@@ -142,7 +142,6 @@
       uploadEffectLevelValElement.style.width = left + 'px';
       uploadEffectLevelValue.value = Math.round((left / maxWidthOfSlider) * 100);
       setFilterEffect(window.initializeFilters.createFilterEffect(uploadEffectLevelValue.value));
-
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();

@@ -45,22 +45,7 @@
       controlElement.addEventListener('change', onRadioControlEffectChange);
     },
     createFilterEffect: function (value) {
-      var maxValueOfProcess = 100;
-      switch (lastEffectName) {
-        case 'effect-chrome':
-          return 'grayscale(' + aproximation(1, maxValueOfProcess, value) + ')';
-        case 'effect-sepia':
-          return 'sepia(' + aproximation(1, maxValueOfProcess, value) + ')';
-        case 'effect-marvin':
-          return 'invert(' + aproximation(100, maxValueOfProcess, value) + '%)';
-        case 'effect-phobos':
-          return 'blur(' + aproximation(3, maxValueOfProcess, value) + 'px)';
-        case 'effect-heat':
-          return 'brightness(' + aproximation(3, maxValueOfProcess, value) + ')';
-        default:
-          break;
-      }
-      return 'none';
+      return createFilterEffect(lastEffectName, value);
     }
   };
 
