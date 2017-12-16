@@ -51,4 +51,5 @@
   galleryOverlayElementCloseElement.addEventListener('click', onCloseButtonClick);
   galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydown);
   document.addEventListener('keydown', onDocumentKeydown);
+
 })();
