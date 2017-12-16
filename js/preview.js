@@ -15,15 +15,16 @@
     if (galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
       galleryOverlayElement.classList.remove(OVERLAY_HIDDEN_CLASS);
     }
+    var comments = getAttribute(element, '.picture-comments', 'textContent').split(/[.!?],/);
     window.renderer.insertDataIntoNode(galleryOverlayElement,
         {
           url: getAttribute(element, 'img', 'src'),
-          comments: getAttribute(element, '.picture-comments', 'textContent'),
+          comments: comments.length,
           likes: getAttribute(element, '.picture-likes', 'textContent')
         },
         {
           url: ['.gallery-overlay-image', 'src'],
-          comments: ['.comments-count', 'textContent.length'],
+          comments: ['.comments-count', 'textContent'],
           likes: ['.likes-count', 'textContent']
         }
     );

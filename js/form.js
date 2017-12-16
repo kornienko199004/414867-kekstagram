@@ -50,6 +50,7 @@
       uploadFileElement.value = '';
     }
     hideSlider();
+    window.xhrError.deleteXhrErrorElement();
   };
 
   var highlightElement = function (element, color) {
@@ -108,6 +109,14 @@
       uploadFileElement.value = '';
     }
     hideSlider();
+    window.xhrError.deleteXhrErrorElement();
+  };
+
+  var onLoad = function () {
+    window.xhrError.deleteXhrErrorElement();
+    uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
+    uploadFileElement.value = '';
+    resetValues();
   };
 
   var onFormSubmit = function (e) {
@@ -121,6 +130,9 @@
       if (!isCommentElementValid) {
         highlightElement(uploadFormDescriptionElement, 'red');
       }
+    } else {
+      e.preventDefault();
+      window.backend.saved(new FormData(formElement), onLoad, window.xhrError.onError);
     }
   };
 
