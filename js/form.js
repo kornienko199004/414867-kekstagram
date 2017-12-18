@@ -132,7 +132,7 @@
       }
     } else {
       e.preventDefault();
-      window.backend.saved(new FormData(formElement), onLoad, window.xhrError.onError);
+      window.backend.save(new FormData(formElement), onLoad, window.xhrError.onError);
     }
   };
 

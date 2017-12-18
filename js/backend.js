@@ -40,7 +40,7 @@
     load: function (onLoad, onError) {
       xhrRequest(URL_DOWNLOAD, 'GET', onLoad, onError);
     },
-    saved: function (data, onLoad, onError) {
+    save: function (data, onLoad, onError) {
       xhrRequest(URL_UPLOAD, 'POST', onLoad, onError, data);
     }
   };
