@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var URL_DOWNLOAD = 'https://1510.dump.academy/kekstagram/data';
+  var URL_DOWNLOAD = 'https://510.dump.academy/kekstagram/data';
   var URL_UPLOAD = 'https://1510.dump.academy/kekstagram';
   var XHR_TIMEOUT = 10000;
 
