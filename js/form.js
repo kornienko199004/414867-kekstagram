@@ -50,7 +50,7 @@
       uploadFileElement.value = '';
     }
     hideSlider();
-    window.errorPopup.hidePopup();
+    window.errorPopup.hide();
   };
 
   var highlightElement = function (element, color) {
@@ -109,11 +109,11 @@
       uploadFileElement.value = '';
     }
     hideSlider();
-    window.errorPopup.hidePopup();
+    window.errorPopup.hide();
   };
 
   var onLoad = function () {
-    window.errorPopup.hidePopup();
+    window.errorPopup.hide();
     uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
     uploadFileElement.value = '';
     resetValues();
@@ -132,7 +132,7 @@
       }
     } else {
       e.preventDefault();
-      window.backend.save(new FormData(formElement), onLoad, window.errorPopup.showPopup);
+      window.backend.save(new FormData(formElement), onLoad, window.errorPopup.show);
     }
   };
 
