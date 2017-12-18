@@ -10,7 +10,7 @@
       document.body.appendChild(errorDiv);
     },
     hidePopup: function () {
-      var errorDiv = document.querySelector(ERROR_ELEMENT_CLASSNAME);
+      var errorDiv = document.querySelector('.' + ERROR_ELEMENT_CLASSNAME);
       if (errorDiv) {
         document.body.removeChild(errorDiv);
       }
