@@ -50,7 +50,7 @@
       uploadFileElement.value = '';
     }
     hideSlider();
-    window.xhrError.deleteXhrErrorElement();
+    window.errorPopup.hidePopup();
   };
 
   var highlightElement = function (element, color) {
@@ -109,11 +109,11 @@
       uploadFileElement.value = '';
     }
     hideSlider();
-    window.xhrError.deleteXhrErrorElement();
+    window.errorPopup.hidePopup();
   };
 
   var onLoad = function () {
-    window.xhrError.deleteXhrErrorElement();
+    window.errorPopup.hidePopup();
     uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
     uploadFileElement.value = '';
     resetValues();
@@ -132,7 +132,7 @@
       }
     } else {
       e.preventDefault();
-      window.backend.save(new FormData(formElement), onLoad, window.xhrError.onError);
+      window.backend.save(new FormData(formElement), onLoad, window.errorPopup.showPopup);
     }
   };
 

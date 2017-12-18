@@ -45,7 +45,7 @@
 
   galleryOverlayElementCloseElement.tabIndex = 0;
 
-  window.backend.load(onLoad, window.xhrError.onError);
+  window.backend.load(onLoad, window.errorPopup.showPopup);
 
   picturesContainerElement.addEventListener('click', function (e) {
     window.preview.onPhotoClick(e, picturesContainerElement, galleryOverlayElement);
