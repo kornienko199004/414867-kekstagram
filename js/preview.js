@@ -18,12 +18,12 @@
     window.renderer.insertDataIntoNode(galleryOverlayElement,
         {
           url: getAttribute(element, 'img', 'src'),
-          comments: getAttribute(element, '.picture-comments', 'textContent'),
+          commentsCount: getAttribute(element, '.picture-comments', 'textContent'),
           likes: getAttribute(element, '.picture-likes', 'textContent')
         },
         {
           url: ['.gallery-overlay-image', 'src'],
-          comments: ['.comments-count', 'textContent'],
+          commentsCount: ['.comments-count', 'textContent'],
           likes: ['.likes-count', 'textContent']
         }
     );

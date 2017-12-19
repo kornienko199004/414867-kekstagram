@@ -28,19 +28,18 @@
   var renderPictures = function (data) {
     pictureList = window.renderer.renderList(pictureTemplateElement, data, {
       url: ['img', 'src'],
-      comments: ['.picture-comments', 'textContent'],
+      commentsCount: ['.picture-comments', 'textContent'],
       likes: ['.picture-likes', 'textContent']
     });
     picturesContainerElement.appendChild(pictureList);
   };
-
   var onLoad = function (data) {
-    pictures = data;
-    pictures.forEach(function (element) {
-      element.commentContent = element.comments;
-      element.comments = element.comments.length;
+    pictures = data.map(function (item) {
+      return Object.assign(item, {
+        commentsCount: item.comments.length
+      });
     });
-    renderPictures(data);
+    renderPictures(pictures);
   };
 
   var pictureList;
