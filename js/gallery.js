@@ -25,9 +25,8 @@
       }
     }
   };
-
-  var onLoad = function (str) {
-    pictureList = window.renderer.renderList(pictureTemplateElement, str, {
+  var renderPictures = function (data) {
+    pictureList = window.renderer.renderList(pictureTemplateElement, data, {
       url: ['img', 'src'],
       comments: ['.picture-comments', 'textContent'],
       likes: ['.picture-likes', 'textContent']
@@ -35,8 +34,18 @@
     picturesContainerElement.appendChild(pictureList);
   };
 
+  var onLoad = function (data) {
+    pictures = data;
+    pictures.forEach(function (element) {
+      element.commentContent = element.comments;
+      element.comments = element.comments.length;
+    });
+    renderPictures(data);
+  };
+
   var pictureList;
 
+  var pictures;
   var picturesContainerElement = document.querySelector('.pictures');
   var pictureTemplateElement = document.querySelector('#picture-template').content;
   var galleryOverlayElement = document.querySelector('.gallery-overlay');

@@ -15,11 +15,10 @@
     if (galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
       galleryOverlayElement.classList.remove(OVERLAY_HIDDEN_CLASS);
     }
-    var comments = getAttribute(element, '.picture-comments', 'textContent').split(/[.!?],/);
     window.renderer.insertDataIntoNode(galleryOverlayElement,
         {
           url: getAttribute(element, 'img', 'src'),
-          comments: comments.length,
+          comments: getAttribute(element, '.picture-comments', 'textContent'),
           likes: getAttribute(element, '.picture-likes', 'textContent')
         },
         {
