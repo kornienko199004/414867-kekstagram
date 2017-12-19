@@ -50,6 +50,7 @@
       uploadFileElement.value = '';
     }
     hideSlider();
+    window.errorPopup.hide();
   };
 
   var highlightElement = function (element, color) {
@@ -108,6 +109,14 @@
       uploadFileElement.value = '';
     }
     hideSlider();
+    window.errorPopup.hide();
+  };
+
+  var onLoad = function () {
+    window.errorPopup.hide();
+    uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
+    uploadFileElement.value = '';
+    resetValues();
   };
 
   var onFormSubmit = function (e) {
@@ -121,6 +130,9 @@
       if (!isCommentElementValid) {
         highlightElement(uploadFormDescriptionElement, 'red');
       }
+    } else {
+      e.preventDefault();
+      window.backend.save(new FormData(formElement), onLoad, window.errorPopup.show);
     }
   };
 
