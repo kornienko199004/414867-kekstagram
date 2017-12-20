@@ -48,6 +48,18 @@
   var generateRandomNumber = function (startNumber, endNumber) {
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
+  var returnMixedArray = function (array) {
+    var element;
+    var number;
+    var mixedArray = [];
+    while (array.length > 0) {
+      number = generateRandomNumber(0, array.length - 1);
+      element = array[number];
+      mixedArray.push(element);
+      array.splice(number, 1);
+    }
+    return mixedArray;
+  };
 
   var returnSortingData = function (picturesArray, typeOfSorting) {
     var picturesArrayCopy = pictures.slice(0);
@@ -63,18 +75,7 @@
           return second.commentsCount - first.commentsCount;
         });
       case 'filter-random':
-        return (function () {
-          var element;
-          var number;
-          var newPicturesArray = [];
-          while (picturesArrayCopy.length > 0) {
-            number = generateRandomNumber(0, picturesArrayCopy.length - 1);
-            element = picturesArrayCopy[number];
-            newPicturesArray.push(element);
-            picturesArrayCopy.splice(number, 1);
-          }
-          return newPicturesArray;
-        })();
+        return returnMixedArray(picturesArrayCopy);
       default:
         break;
     }
