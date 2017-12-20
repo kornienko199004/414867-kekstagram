@@ -48,7 +48,7 @@
   var generateRandomNumber = function (startNumber, endNumber) {
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
-  var returnMixedArray = function (array) {
+  var createMixedArray = function (array) {
     var element;
     var number;
     var mixedArray = [];
@@ -75,7 +75,7 @@
           return second.commentsCount - first.commentsCount;
         });
       case 'filter-random':
-        return returnMixedArray(picturesArrayCopy);
+        return createMixedArray(picturesArrayCopy);
       default:
         break;
     }
