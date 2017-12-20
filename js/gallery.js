@@ -49,7 +49,8 @@
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
 
-  var returnSortingData = function (picturesArray, picturesArrayCopy, typeOfSorting) {
+  var returnSortingData = function (picturesArray, typeOfSorting) {
+    var picturesArrayCopy = pictures.slice(0);
     switch (typeOfSorting) {
       case 'filter-recommend':
         return picturesArray;
@@ -89,7 +90,7 @@
     }
 
     window.debounce(function () {
-      renderPictures(returnSortingData(pictures, pictures.slice(0), sortingType));
+      renderPictures(returnSortingData(pictures, sortingType));
     });
 
   };
