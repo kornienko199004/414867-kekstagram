@@ -49,14 +49,15 @@
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
   var createMixedArray = function (array) {
+    var arrayCopy = array.slice(0);
     var element;
     var number;
     var mixedArray = [];
-    while (array.length > 0) {
-      number = generateRandomNumber(0, array.length - 1);
-      element = array[number];
+    while (arrayCopy.length > 0) {
+      number = generateRandomNumber(0, arrayCopy.length - 1);
+      element = arrayCopy[number];
       mixedArray.push(element);
-      array.splice(number, 1);
+      arrayCopy.splice(number, 1);
     }
     return mixedArray;
   };
