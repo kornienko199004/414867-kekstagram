@@ -32,6 +32,9 @@
       likes: ['.picture-likes', 'textContent']
     });
     picturesContainerElement.appendChild(pictureList);
+    if (filtersElement.classList.contains('filters-inactive')) {
+      filtersElement.classList.remove('filters-inactive');
+    }
   };
   var onLoad = function (data) {
     pictures = data.map(function (item) {
@@ -42,6 +45,58 @@
     renderPictures(pictures);
   };
 
+  var generateRandomNumber = function (startNumber, endNumber) {
+    return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
+  };
+  var createMixedArray = function (array) {
+    var arrayCopy = array.slice(0);
+    var element;
+    var number;
+    var mixedArray = [];
+    while (arrayCopy.length > 0) {
+      number = generateRandomNumber(0, arrayCopy.length - 1);
+      element = arrayCopy[number];
+      mixedArray.push(element);
+      arrayCopy.splice(number, 1);
+    }
+    return mixedArray;
+  };
+
+  var returnSortingData = function (picturesArray, typeOfSorting) {
+    var picturesArrayCopy = pictures.slice(0);
+    switch (typeOfSorting) {
+      case 'filter-recommend':
+        return picturesArray;
+      case 'filter-popular':
+        return picturesArrayCopy.sort(function (first, second) {
+          return second.likes - first.likes;
+        });
+      case 'filter-discussed':
+        return picturesArrayCopy.sort(function (first, second) {
+          return second.commentsCount - first.commentsCount;
+        });
+      case 'filter-random':
+        return createMixedArray(picturesArrayCopy);
+      default:
+        break;
+    }
+    return 'none';
+  };
+
+  var onSortingMethodChange = function (e) {
+    var sortingType = e.target.id;
+    var children = picturesContainerElement.querySelectorAll('.picture');
+    for (var i = children.length - 1; i >= 0; i--) {
+      var child = children[i];
+      picturesContainerElement.removeChild(child);
+    }
+
+    window.debounce(function () {
+      renderPictures(returnSortingData(pictures, sortingType));
+    });
+
+  };
+
   var pictureList;
 
   var pictures;
@@ -50,7 +105,7 @@
   var galleryOverlayElement = document.querySelector('.gallery-overlay');
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
   var lastPictureFocused;
-
+  var filtersElement = document.querySelector('.filters');
   galleryOverlayElementCloseElement.tabIndex = 0;
 
   window.backend.load(onLoad, window.errorPopup.show);
@@ -65,4 +120,5 @@
   galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydown);
   document.addEventListener('keydown', onDocumentKeydown);
 
+  filtersElement.addEventListener('change', onSortingMethodChange);
 })();
