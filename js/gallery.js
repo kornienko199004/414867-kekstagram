@@ -49,18 +49,6 @@
     return Math.round(Math.random() * (endNumber - startNumber)) + startNumber;
   };
 
-  (function () {
-    var DEBOUNCE_INTERVAL = 500;
-
-    var lastTimeout;
-    window.debounce = function (fun) {
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(fun, DEBOUNCE_INTERVAL);
-    };
-  })();
-
   var returnSortingData = function (picturesArray, picturesArrayCopy, typeOfSorting) {
     switch (typeOfSorting) {
       case 'filter-recommend':
