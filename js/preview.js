@@ -61,7 +61,7 @@
 
         if (matches) {
           var reader = new FileReader();
-
+          window.errorPopup.hide();
           reader.addEventListener('load', function () {
             if (dropFile) {
               onLoad(reader.result, file);
@@ -71,6 +71,8 @@
             }
           });
           reader.readAsDataURL(file);
+        } else {
+          window.errorPopup.show('Не правильный формат файла');
         }
       };
 
