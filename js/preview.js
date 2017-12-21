@@ -55,8 +55,8 @@
     dragPicture: function (fileElement, dropElement, onLoad) {
       var loadPreview = function (file) {
         var fileName = file.name.toLowerCase();
-        var matches = FILE_EXTENSIONS.some(function (it) {
-          return fileName.endsWith(it);
+        var matches = FILE_EXTENSIONS.some(function (extension) {
+          return fileName.endsWith(extension);
         });
 
         window.errorPopup.hide();
