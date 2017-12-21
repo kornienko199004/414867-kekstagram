@@ -6,7 +6,7 @@
   var SCALE_STEP = 25;
   var DEFAULT_SCALE = 55;
 
-  window.initializeScale = function (uploadFileElement, scaleElement, adjustScale) {
+  window.initializeScale = function (fileElement, dropElement, scaleElement, adjustScale) {
     var onResizeControlsButtonDecClick = function () {
       scale = +uploadResizeControlsValue.value.slice(0, uploadResizeControlsValue.value.length - 1) - SCALE_STEP;
       if (scale < MIN_SCALE) {
@@ -37,6 +37,7 @@
 
     uploadResizeControlsButtonInc.addEventListener('click', onResizeControlsButtonInkClick);
     uploadResizeControlsButtonDec.addEventListener('click', onResizeControlsButtonDecClick);
-    uploadFileElement.addEventListener('change', setDefaultScale);
+    fileElement.addEventListener('change', setDefaultScale);
+    dropElement.addEventListener('drop', setDefaultScale);
   };
 })();

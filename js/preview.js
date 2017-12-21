@@ -3,6 +3,7 @@
 (function () {
   var CODE_ENTER = 13;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
+  var FILE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
 
   var getAttribute = function (element, selector, attribute) {
     if (element) {
@@ -29,6 +30,8 @@
     );
   };
 
+  var dropFile;
+
 
   window.preview = {
     onPhotoClick: function (e, picturesContainerElement, galleryOverlayElement) {
@@ -47,6 +50,50 @@
       if (e.keyCode === CODE_ENTER) {
         showCurrentPhotoOverlay(e.target, galleryOverlayElement);
       }
+    },
+
+    dragPicture: function (fileElement, dropElement, onLoad) {
+      var loadPreview = function (file) {
+        var fileName = file.name.toLowerCase();
+        var matches = FILE_EXTENSIONS.some(function (extension) {
+          return fileName.endsWith(extension);
+        });
+
+        window.errorPopup.hide();
+
+        if (matches) {
+          var reader = new FileReader();
+          reader.addEventListener('load', function () {
+            if (dropFile) {
+              onLoad(reader.result, file);
+              dropFile = null;
+            } else {
+              onLoad(reader.result);
+            }
+          });
+          reader.readAsDataURL(file);
+        } else {
+          window.errorPopup.show('Не правильный формат файла');
+        }
+      };
+
+      var onInputFileChange = function (e) {
+        var file = e.target.files[0];
+        loadPreview(file);
+      };
+
+      var onInputFileDrop = function (e) {
+        e.preventDefault();
+        dropFile = e.dataTransfer.files[0];
+        loadPreview(dropFile);
+      };
+
+      dropElement.addEventListener('dragover', function (e) {
+        e.preventDefault();
+      });
+
+      dropElement.addEventListener('drop', onInputFileDrop);
+      fileElement.addEventListener('change', onInputFileChange);
     }
   };
 })();

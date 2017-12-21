@@ -28,13 +28,6 @@
       uploadEffectLevelElement.classList.add(OVERLAY_HIDDEN_CLASS);
     }
   };
-  var onInputFileChange = function () {
-    if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-      uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
-      resetValues();
-
-    }
-  };
 
   var onCommentInputOnFocus = function () {
     isCommentInputOnFocus = 1;
@@ -132,7 +125,12 @@
       }
     } else {
       e.preventDefault();
-      window.backend.save(new FormData(formElement), onLoad, window.errorPopup.show);
+      var formData = new FormData(formElement);
+      if (dropFile) {
+        formData.set('filename', dropFile);
+        dropFile = null;
+      }
+      window.backend.save(formData, onLoad, window.errorPopup.show);
     }
   };
 
@@ -216,16 +214,24 @@
   var defaultPositionOfSlider = uploadEffectLevelPinElement.style.left;
   var defaultWidth = uploadEffectLevelValElement.style.width;
   var defaultLeft = uploadEffectLevelValue.value;
+  var uploadFileElementLabel = formElement.querySelector('.upload-file');
+  var dropFile;
+  window.initializeScale(uploadFileElement, uploadFileElementLabel, scaleElement, setScale);
+  window.preview.dragPicture(uploadFileElement, uploadFileElementLabel, function (pictureSrc, dropTarget) {
+    dropFile = dropTarget;
+    effectImagePreview.src = pictureSrc;
+    if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+      uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
+      resetValues();
+    }
+  });
 
-  window.initializeScale(uploadFileElement, scaleElement, setScale);
-
+  effectImagePreview.style.backgroundColor = 'white';
   window.initializeFilters.effect(uploadEffectControlElement, setFilter, 100);
 
   uploadEffectLevelElement.classList.add(OVERLAY_HIDDEN_CLASS);
 
   formElement.action = 'https://js.dump.academy/kekstagram';
-
-  uploadFileElement.addEventListener('change', onInputFileChange);
   uploadFormCancelElement.addEventListener('click', onCancelButtonClick);
   uploadFormDescriptionElement.maxLength = MAX_COMMENT_LENGTH;
   uploadFormDescriptionElement.addEventListener('focus', onCommentInputOnFocus);
@@ -235,6 +241,5 @@
   uploadFormHashtagsElement.addEventListener('change', onChangeTagsElement);
   document.addEventListener('keydown', onDocumentKeydown);
   formElement.addEventListener('submit', onFormSubmit);
-
   uploadEffectLevelPinElement.addEventListener('mousedown', onSliderPinMouseDown);
 })();
