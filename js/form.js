@@ -7,6 +7,7 @@
   var MAX_QUANTITY_OF_HASHTAGS = 5;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
   var DEFAULT_FILTER_EFFECT = 'none';
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var resetValues = function () {
     effectImagePreview.className = defaultEffectClassName;
@@ -28,12 +29,37 @@
       uploadEffectLevelElement.classList.add(OVERLAY_HIDDEN_CLASS);
     }
   };
-  var onInputFileChange = function () {
-    if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
-      uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
-      resetValues();
 
+  var setNewSrcOfImagePreview = function (file) {
+    var fileName = file.name.toLowerCase();
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        effectImagePreview.src = reader.result;
+        if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
+          uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
+          resetValues();
+        }
+      });
+      reader.readAsDataURL(file);
     }
+  };
+
+  var onInputFileChange = function () {
+    var file = uploadFileElement.files[0];
+    setNewSrcOfImagePreview(file);
+  };
+
+  var onInputFileDrop = function (e) {
+    e.preventDefault();
+    var file = e.dataTransfer.files[0];
+    formData.set('filename', e.dataTransfer.files[0]);
+    setNewSrcOfImagePreview(file);
   };
 
   var onCommentInputOnFocus = function () {
@@ -132,7 +158,7 @@
       }
     } else {
       e.preventDefault();
-      window.backend.save(new FormData(formElement), onLoad, window.errorPopup.show);
+      window.backend.save(formData, onLoad, window.errorPopup.show);
     }
   };
 
@@ -216,8 +242,10 @@
   var defaultPositionOfSlider = uploadEffectLevelPinElement.style.left;
   var defaultWidth = uploadEffectLevelValElement.style.width;
   var defaultLeft = uploadEffectLevelValue.value;
+  var uploadFileElementLabel = formElement.querySelector('.upload-file');
+  var formData = new FormData(formElement);
 
-  window.initializeScale(uploadFileElement, scaleElement, setScale);
+  window.initializeScale(uploadFileElement, uploadFileElementLabel, scaleElement, setScale);
 
   window.initializeFilters.effect(uploadEffectControlElement, setFilter, 100);
 
@@ -235,6 +263,11 @@
   uploadFormHashtagsElement.addEventListener('change', onChangeTagsElement);
   document.addEventListener('keydown', onDocumentKeydown);
   formElement.addEventListener('submit', onFormSubmit);
-
   uploadEffectLevelPinElement.addEventListener('mousedown', onSliderPinMouseDown);
+
+  uploadFileElementLabel.addEventListener('dragover', function (e) {
+    e.preventDefault();
+  });
+  uploadFileElementLabel.addEventListener('drop', onInputFileDrop);
+
 })();
