@@ -3,7 +3,7 @@
 (function () {
   var CODE_ENTER = 13;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var FILE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
 
   var getAttribute = function (element, selector, attribute) {
     if (element) {
@@ -55,7 +55,7 @@
     dragPicture: function (fileElement, dropElement, onLoad) {
       var loadPreview = function (file) {
         var fileName = file.name.toLowerCase();
-        var matches = FILE_TYPES.some(function (it) {
+        var matches = FILE_EXTENSIONS.some(function (it) {
           return fileName.endsWith(it);
         });
 
