@@ -77,8 +77,8 @@
         }
       };
 
-      var onInputFileChange = function () {
-        var file = fileElement.files[0];
+      var onInputFileChange = function (e) {
+        var file = e.target.files[0];
         setNewSrcOfImagePreview(file);
       };
 
