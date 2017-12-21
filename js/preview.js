@@ -53,7 +53,7 @@
     },
 
     dragPicture: function (fileElement, dropElement, onLoad) {
-      var setNewSrcOfImagePreview = function (file) {
+      var loadPreview = function (file) {
         var fileName = file.name.toLowerCase();
         var matches = FILE_TYPES.some(function (it) {
           return fileName.endsWith(it);
@@ -79,13 +79,13 @@
 
       var onInputFileChange = function (e) {
         var file = e.target.files[0];
-        setNewSrcOfImagePreview(file);
+        loadPreview(file);
       };
 
       var onInputFileDrop = function (e) {
         e.preventDefault();
         dropFile = e.dataTransfer.files[0];
-        setNewSrcOfImagePreview(dropFile);
+        loadPreview(dropFile);
       };
 
       dropElement.addEventListener('dragover', function (e) {
