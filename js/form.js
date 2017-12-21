@@ -126,9 +126,9 @@
     } else {
       e.preventDefault();
       var formData = new FormData(formElement);
-      if (window.showLoadPhoto.returnDropFile()) {
-        formData.set('filename', window.showLoadPhoto.returnDropFile());
-        window.showLoadPhoto.resetDropFile();
+      if (dropFile) {
+        formData.set('filename', dropFile);
+        dropFile = null;
       }
       window.backend.save(formData, onLoad, window.errorPopup.show);
     }
@@ -215,9 +215,11 @@
   var defaultWidth = uploadEffectLevelValElement.style.width;
   var defaultLeft = uploadEffectLevelValue.value;
   var uploadFileElementLabel = formElement.querySelector('.upload-file');
-
+  var dropFile;
   window.initializeScale(uploadFileElement, uploadFileElementLabel, scaleElement, setScale);
-  window.showLoadPhoto.showPhoto(effectImagePreview, uploadFileElement, uploadFileElementLabel, function () {
+  window.preview.dragPicture(uploadFileElement, uploadFileElementLabel, function (pictureSrc, dropTarget) {
+    dropFile = dropTarget;
+    effectImagePreview.src = pictureSrc;
     if (uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS)) {
       uploadOverlay.classList.remove(OVERLAY_HIDDEN_CLASS);
       resetValues();

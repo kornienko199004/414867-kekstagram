@@ -3,6 +3,7 @@
 (function () {
   var CODE_ENTER = 13;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var getAttribute = function (element, selector, attribute) {
     if (element) {
@@ -29,6 +30,8 @@
     );
   };
 
+  var dropFile;
+
 
   window.preview = {
     onPhotoClick: function (e, picturesContainerElement, galleryOverlayElement) {
@@ -47,6 +50,47 @@
       if (e.keyCode === CODE_ENTER) {
         showCurrentPhotoOverlay(e.target, galleryOverlayElement);
       }
+    },
+
+    dragPicture: function (fileElement, dropElement, onLoad) {
+      var setNewSrcOfImagePreview = function (file) {
+        var fileName = file.name.toLowerCase();
+        var matches = FILE_TYPES.some(function (it) {
+          return fileName.endsWith(it);
+        });
+
+        if (matches) {
+          var reader = new FileReader();
+
+          reader.addEventListener('load', function () {
+            if (dropFile) {
+              onLoad(reader.result, file);
+              dropFile = null;
+            } else {
+              onLoad(reader.result);
+            }
+          });
+          reader.readAsDataURL(file);
+        }
+      };
+
+      var onInputFileChange = function () {
+        var file = fileElement.files[0];
+        setNewSrcOfImagePreview(file);
+      };
+
+      var onInputFileDrop = function (e) {
+        e.preventDefault();
+        dropFile = e.dataTransfer.files[0];
+        setNewSrcOfImagePreview(dropFile);
+      };
+
+      dropElement.addEventListener('dragover', function (e) {
+        e.preventDefault();
+      });
+
+      dropElement.addEventListener('drop', onInputFileDrop);
+      fileElement.addEventListener('change', onInputFileChange);
     }
   };
 })();
