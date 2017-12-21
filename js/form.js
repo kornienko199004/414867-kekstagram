@@ -226,6 +226,7 @@
     }
   });
 
+  effectImagePreview.style.backgroundColor = 'white';
   window.initializeFilters.effect(uploadEffectControlElement, setFilter, 100);
 
   uploadEffectLevelElement.classList.add(OVERLAY_HIDDEN_CLASS);
