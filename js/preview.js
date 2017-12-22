@@ -86,6 +86,9 @@
         evt.preventDefault();
         dropFile = evt.dataTransfer.files[0];
         loadPreview(dropFile);
+        if (fileElement.required) {
+          fileElement.required = false;
+        }
       };
 
       dropElement.addEventListener('dragover', function (e) {

@@ -134,6 +134,9 @@
         dropFile = null;
       }
       window.backend.save(formData, onLoad, window.errorPopup.show);
+      if (!uploadFileElement.required) {
+        uploadFileElement.required = true;
+      }
     }
   };
 
