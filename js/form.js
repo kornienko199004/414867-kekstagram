@@ -58,8 +58,7 @@
     if (!tagsString) {
       return true;
     }
-    var possibleTags = tagsString.split(' ');
-    possibleTags = possibleTags.map(function (item) {
+    var possibleTags = tagsString.split(' ').map(function (item) {
       return item.toLowerCase();
     });
     var uniqueTags = possibleTags.filter(function (value, index, self) {
