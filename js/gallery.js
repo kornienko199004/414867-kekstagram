@@ -20,18 +20,18 @@
     if (e.keyCode === CODE_ENTER) {
       e.preventDefault();
       galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
-      if (lastPictureFocused) {
-        lastPictureFocused.focus();
+      if (lastPictureFocusedElement) {
+        lastPictureFocusedElement.focus();
       }
     }
   };
   var renderPictures = function (data) {
-    pictureList = window.renderer.renderList(pictureTemplateElement, data, {
+    pictureListElement = window.renderer.renderList(pictureTemplateElement, data, {
       url: ['img', 'src'],
       commentsCount: ['.picture-comments', 'textContent'],
       likes: ['.picture-likes', 'textContent']
     });
-    picturesContainerElement.appendChild(pictureList);
+    picturesContainerElement.appendChild(pictureListElement);
     if (filtersElement.classList.contains('filters-inactive')) {
       filtersElement.classList.remove('filters-inactive');
     }
@@ -98,14 +98,14 @@
 
   };
 
-  var pictureList;
+  var pictureListElement;
 
   var pictures;
   var picturesContainerElement = document.querySelector('.pictures');
   var pictureTemplateElement = document.querySelector('#picture-template').content;
   var galleryOverlayElement = document.querySelector('.gallery-overlay');
   var galleryOverlayElementCloseElement = document.querySelector('.gallery-overlay-close');
-  var lastPictureFocused;
+  var lastPictureFocusedElement;
   var filtersElement = document.querySelector('.filters');
   galleryOverlayElementCloseElement.tabIndex = 0;
 
