@@ -5,20 +5,20 @@
   var CODE_ENTER = 13;
   var OVERLAY_HIDDEN_CLASS = 'hidden';
 
-  var onDocumentKeydown = function (e) {
-    if (!galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS) && (e.keyCode === CODE_ESC)) {
+  var onDocumentKeydown = function (evt) {
+    if (!galleryOverlayElement.classList.contains(OVERLAY_HIDDEN_CLASS) && (evt.keyCode === CODE_ESC)) {
       galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
     }
   };
 
-  var onCloseButtonClick = function (e) {
-    e.preventDefault();
+  var onCloseButtonClick = function (evt) {
+    evt.preventDefault();
     galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
   };
 
-  var onCloseButtonKeydown = function (e) {
-    if (e.keyCode === CODE_ENTER) {
-      e.preventDefault();
+  var onCloseButtonKeydown = function (evt) {
+    if (evt.keyCode === CODE_ENTER) {
+      evt.preventDefault();
       galleryOverlayElement.classList.add(OVERLAY_HIDDEN_CLASS);
       if (lastPictureFocusedElement) {
         lastPictureFocusedElement.focus();
@@ -83,9 +83,9 @@
     return 'none';
   };
 
-  var onSortingMethodChange = function (e) {
+  var onSortingMethodChange = function (evt) {
     var child;
-    var sortingType = e.target.id;
+    var sortingType = evt.target.id;
     var children = picturesContainerElement.querySelectorAll('.picture');
     for (var i = children.length - 1; i >= 0; i--) {
       child = children[i];
@@ -111,11 +111,11 @@
 
   window.backend.load(onLoad, window.errorPopup.show);
 
-  picturesContainerElement.addEventListener('click', function (e) {
-    window.preview.onPhotoClick(e, picturesContainerElement, galleryOverlayElement);
+  picturesContainerElement.addEventListener('click', function (evt) {
+    window.preview.onPhotoClick(evt, picturesContainerElement, galleryOverlayElement);
   });
-  picturesContainerElement.addEventListener('keydown', function (e) {
-    window.preview.onPhotoKeydown(e, galleryOverlayElement);
+  picturesContainerElement.addEventListener('keydown', function (evt) {
+    window.preview.onPhotoKeydown(evt, galleryOverlayElement);
   });
   galleryOverlayElementCloseElement.addEventListener('click', onCloseButtonClick);
   galleryOverlayElementCloseElement.addEventListener('keydown', onCloseButtonKeydown);

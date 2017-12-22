@@ -96,8 +96,8 @@
     }
   };
 
-  var onDocumentKeydown = function (e) {
-    if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
+  var onDocumentKeydown = function (evt) {
+    if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && evt.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
     }
@@ -112,11 +112,11 @@
     resetValues();
   };
 
-  var onFormSubmit = function (e) {
+  var onFormSubmit = function (evt) {
     var isCommentElementValid = validateCommentElement();
     var isTagsElementValid = validateTagsElement();
     if (!isCommentElementValid || !isTagsElementValid) {
-      e.preventDefault();
+      evt.preventDefault();
       if (!isTagsElementValid) {
         highlightElement(uploadFormHashtagsElement, 'red');
       }
@@ -124,7 +124,7 @@
         highlightElement(uploadFormDescriptionElement, 'red');
       }
     } else {
-      e.preventDefault();
+      evt.preventDefault();
       var formData = new FormData(formElement);
       if (dropFile) {
         formData.set('filename', dropFile);
@@ -134,10 +134,10 @@
     }
   };
 
-  var onSliderPinMouseDown = function (e) {
-    e.preventDefault();
+  var onSliderPinMouseDown = function (evt) {
+    evt.preventDefault();
     var maxWidthOfSlider = uploadEffectLevelLineElement.offsetWidth;
-    var startCoords = e.clientX;
+    var startCoords = evt.clientX;
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
