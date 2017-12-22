@@ -59,6 +59,9 @@
       return true;
     }
     var possibleTags = tagsString.split(' ');
+    possibleTags = possibleTags.map(function (item) {
+      return item.toLowerCase();
+    });
     var uniqueTags = possibleTags.filter(function (value, index, self) {
       return self.indexOf(value) === index;
     });
@@ -175,7 +178,7 @@
     if (effectName) {
       effectImagePreview.classList.add(effectName);
     }
-    effectImagePreview.style.filter = filter;
+    setFilterEffect(filter);
     resetSliderPosition();
     if (effectName !== 'effect-none') {
       if (uploadEffectLevelElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
