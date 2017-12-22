@@ -84,10 +84,11 @@
   };
 
   var onSortingMethodChange = function (e) {
+    var child;
     var sortingType = e.target.id;
     var children = picturesContainerElement.querySelectorAll('.picture');
     for (var i = children.length - 1; i >= 0; i--) {
-      var child = children[i];
+      child = children[i];
       picturesContainerElement.removeChild(child);
     }
 
