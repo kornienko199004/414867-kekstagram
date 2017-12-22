@@ -62,21 +62,21 @@
     return mixedArray;
   };
 
-  var returnSortingData = function (picturesArray, typeOfSorting) {
-    var picturesArrayCopy = pictures.slice(0);
+  var returnSortingData = function (pictures, typeOfSorting) {
+    var picturesCopy = pictures.slice(0);
     switch (typeOfSorting) {
       case 'filter-recommend':
-        return picturesArray;
+        return pictures;
       case 'filter-popular':
-        return picturesArrayCopy.sort(function (first, second) {
+        return picturesCopy.sort(function (first, second) {
           return second.likes - first.likes;
         });
       case 'filter-discussed':
-        return picturesArrayCopy.sort(function (first, second) {
+        return picturesCopy.sort(function (first, second) {
           return second.commentsCount - first.commentsCount;
         });
       case 'filter-random':
-        return createMixedArray(picturesArrayCopy);
+        return createMixedArray(picturesCopy);
       default:
         break;
     }
