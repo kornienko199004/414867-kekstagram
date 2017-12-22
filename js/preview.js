@@ -6,10 +6,7 @@
   var FILE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
 
   var getAttribute = function (element, selector, attribute) {
-    if (element) {
-      var value = element.querySelector(selector)[attribute];
-    }
-    return value;
+    return element.querySelector(selector)[attribute];
   };
 
   var showCurrentPhotoOverlay = function (element, galleryOverlayElement) {
