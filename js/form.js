@@ -10,7 +10,7 @@
 
   var resetValues = function () {
     effectImagePreview.className = defaultEffectClassName;
-    effect.checked = defaultEffect;
+    effectElement.checked = defaultEffect;
     uploadFormHashtagsElement.value = '';
     uploadFormDescriptionElement.value = '';
     resetSliderPosition();
@@ -200,8 +200,8 @@
   var uploadFormHashtagsElement = formElement.querySelector('.upload-form-hashtags');
   var scaleElement = document.querySelector('.upload-resize-controls');
 
-  var effect = formElement.querySelector('[name=effect]');
-  var defaultEffect = effect.checked;
+  var effectElement = formElement.querySelector('[name=effect]');
+  var defaultEffect = effectElement.checked;
   var defaultEffectClassName = effectImagePreview.className;
 
   var isCommentInputOnFocus;
