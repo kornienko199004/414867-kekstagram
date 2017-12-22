@@ -103,9 +103,9 @@
     if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && evt.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
+      hideSlider();
+      window.errorPopup.hide();
     }
-    hideSlider();
-    window.errorPopup.hide();
   };
 
   var onLoad = function () {
