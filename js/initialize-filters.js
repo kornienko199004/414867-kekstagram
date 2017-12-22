@@ -35,9 +35,9 @@
   window.initializeFilters = {
     effect: function (controlElement, applyFilter) {
 
-      var onRadioControlEffectChange = function (e) {
+      var onRadioControlEffectChange = function (evt) {
         var str = EFFECT_CLASS_NAME_PREFIX;
-        var effectName = e.target.id.slice(str.length);
+        var effectName = evt.target.id.slice(str.length);
         applyFilter(lastEffectName, createFilterEffect(effectName, DEFAULT_FILTER_VALUE), effectName);
 
         lastEffectName = effectName;

@@ -10,7 +10,7 @@
 
   var resetValues = function () {
     effectImagePreview.className = defaultEffectClassName;
-    effect.checked = defaultEffect;
+    effectElement.checked = defaultEffect;
     uploadFormHashtagsElement.value = '';
     uploadFormDescriptionElement.value = '';
     resetSliderPosition();
@@ -58,7 +58,9 @@
     if (!tagsString) {
       return true;
     }
-    var possibleTags = tagsString.split(' ');
+    var possibleTags = tagsString.split(' ').map(function (item) {
+      return item.toLowerCase();
+    });
     var uniqueTags = possibleTags.filter(function (value, index, self) {
       return self.indexOf(value) === index;
     });
@@ -96,13 +98,13 @@
     }
   };
 
-  var onDocumentKeydown = function (e) {
-    if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && e.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
+  var onDocumentKeydown = function (evt) {
+    if (!uploadOverlay.classList.contains(OVERLAY_HIDDEN_CLASS) && evt.keyCode === CODE_ESC && isCommentInputOnFocus !== 1) {
       uploadOverlay.classList.add(OVERLAY_HIDDEN_CLASS);
       uploadFileElement.value = '';
+      hideSlider();
+      window.errorPopup.hide();
     }
-    hideSlider();
-    window.errorPopup.hide();
   };
 
   var onLoad = function () {
@@ -112,11 +114,11 @@
     resetValues();
   };
 
-  var onFormSubmit = function (e) {
+  var onFormSubmit = function (evt) {
     var isCommentElementValid = validateCommentElement();
     var isTagsElementValid = validateTagsElement();
     if (!isCommentElementValid || !isTagsElementValid) {
-      e.preventDefault();
+      evt.preventDefault();
       if (!isTagsElementValid) {
         highlightElement(uploadFormHashtagsElement, 'red');
       }
@@ -124,20 +126,23 @@
         highlightElement(uploadFormDescriptionElement, 'red');
       }
     } else {
-      e.preventDefault();
+      evt.preventDefault();
       var formData = new FormData(formElement);
       if (dropFile) {
         formData.set('filename', dropFile);
         dropFile = null;
       }
       window.backend.save(formData, onLoad, window.errorPopup.show);
+      if (!uploadFileElement.required) {
+        uploadFileElement.required = true;
+      }
     }
   };
 
-  var onSliderPinMouseDown = function (e) {
-    e.preventDefault();
+  var onSliderPinMouseDown = function (evt) {
+    evt.preventDefault();
     var maxWidthOfSlider = uploadEffectLevelLineElement.offsetWidth;
-    var startCoords = e.clientX;
+    var startCoords = evt.clientX;
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
@@ -175,7 +180,7 @@
     if (effectName) {
       effectImagePreview.classList.add(effectName);
     }
-    effectImagePreview.style.filter = filter;
+    setFilterEffect(filter);
     resetSliderPosition();
     if (effectName !== 'effect-none') {
       if (uploadEffectLevelElement.classList.contains(OVERLAY_HIDDEN_CLASS)) {
@@ -200,8 +205,8 @@
   var uploadFormHashtagsElement = formElement.querySelector('.upload-form-hashtags');
   var scaleElement = document.querySelector('.upload-resize-controls');
 
-  var effect = formElement.querySelector('[name=effect]');
-  var defaultEffect = effect.checked;
+  var effectElement = formElement.querySelector('[name=effect]');
+  var defaultEffect = effectElement.checked;
   var defaultEffectClassName = effectImagePreview.className;
 
   var isCommentInputOnFocus;

@@ -34,10 +34,10 @@
 
 
   window.preview = {
-    onPhotoClick: function (e, picturesContainerElement, galleryOverlayElement) {
-      var clickElement = e.target;
+    onPhotoClick: function (evt, picturesContainerElement, galleryOverlayElement) {
+      var clickElement = evt.target;
       var pictureElement = document.querySelector('.picture');
-      e.preventDefault();
+      evt.preventDefault();
       while (clickElement !== picturesContainerElement) {
         clickElement = clickElement.parentNode;
         if (pictureElement.className === clickElement.className) {
@@ -46,9 +46,9 @@
       }
     },
 
-    onPhotoKeydown: function (e, galleryOverlayElement) {
-      if (e.keyCode === CODE_ENTER) {
-        showCurrentPhotoOverlay(e.target, galleryOverlayElement);
+    onPhotoKeydown: function (evt, galleryOverlayElement) {
+      if (evt.keyCode === CODE_ENTER) {
+        showCurrentPhotoOverlay(evt.target, galleryOverlayElement);
       }
     },
 
@@ -77,15 +77,18 @@
         }
       };
 
-      var onInputFileChange = function (e) {
-        var file = e.target.files[0];
+      var onInputFileChange = function (evt) {
+        var file = evt.target.files[0];
         loadPreview(file);
       };
 
-      var onInputFileDrop = function (e) {
-        e.preventDefault();
-        dropFile = e.dataTransfer.files[0];
+      var onInputFileDrop = function (evt) {
+        evt.preventDefault();
+        dropFile = evt.dataTransfer.files[0];
         loadPreview(dropFile);
+        if (fileElement.required) {
+          fileElement.required = false;
+        }
       };
 
       dropElement.addEventListener('dragover', function (e) {
