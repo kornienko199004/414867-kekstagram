@@ -7,9 +7,12 @@
 
   var getAttribute = function (element, selector, attribute) {
     if (element) {
-      var value = element.querySelector(selector)[attribute];
+      var childElement = element.querySelector(selector);
+      if (childElement) {
+        return childElement[attribute];
+      }
     }
-    return value;
+    return 'none';
   };
 
   var showCurrentPhotoOverlay = function (element, galleryOverlayElement) {
